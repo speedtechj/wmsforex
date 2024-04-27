@@ -187,7 +187,7 @@ class Scaninvoice extends Page implements HasForms, HasTable
                     ->label('Batch Number'),
 
 
-            ])
+            ])->defaultSort('created_at', 'desc')
 
             ->filters([
                 // ...
