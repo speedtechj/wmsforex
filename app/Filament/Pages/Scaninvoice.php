@@ -60,6 +60,7 @@ class Scaninvoice extends Page implements HasForms, HasTable
                     ->aside()
                     ->schema([
                         TextInput::make('booking_invoice')
+                            ->required()
                             ->numeric()
                             ->live()
                             ->label('Scan Invoice')

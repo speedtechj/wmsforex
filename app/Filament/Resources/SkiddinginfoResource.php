@@ -22,6 +22,7 @@ use Filament\Notifications\Notification;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\Summarizers\Range;
 use Filament\Tables\Columns\Summarizers\Average;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -64,6 +65,7 @@ class SkiddinginfoResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('virtual_invoice')
                     ->label('Invoice')
+                    ->summarize(Average::make())
                     ->searchable(),
                 Tables\Columns\TextColumn::make('booking.boxtype.description')
                     ->numeric()
