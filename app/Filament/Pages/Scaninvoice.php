@@ -63,7 +63,7 @@ class Scaninvoice extends Page implements HasForms, HasTable
                             
                             ->required()
                             ->numeric()
-                            ->live(debounce: 10)
+                            ->live(debounce: 1000)
                             ->label('Scan Invoice')
                             ->placeholder('Scan Invoice')
                             ->autofocus()
