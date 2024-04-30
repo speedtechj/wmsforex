@@ -27,7 +27,6 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('/')
-            ->spa()
             ->brandName('WMS ver 1.0')
             ->login()
             ->profile()
