@@ -30,7 +30,6 @@ class AdminPanelProvider extends PanelProvider
             ->brandName('WMS ver 1.0')
             ->login()
             ->profile()
-            ->unsavedChangesAlerts()
             ->maxContentWidth(MaxWidth::Full)
             // ->sidebarCollapsibleOnDesktop()
             ->sidebarFullyCollapsibleOnDesktop()
