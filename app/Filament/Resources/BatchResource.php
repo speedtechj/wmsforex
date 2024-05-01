@@ -46,6 +46,7 @@ class BatchResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+              ->query(Batch::query()->where('is_lock', false))
             ->columns([
                 Tables\Columns\TextColumn::make('batchno')
                     ->label('Batch No')
