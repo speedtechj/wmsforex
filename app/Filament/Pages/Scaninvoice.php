@@ -22,6 +22,7 @@ use Filament\Support\Enums\FontWeight;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\Layout\Grid;
@@ -132,7 +133,11 @@ class Scaninvoice extends Page implements HasForms, HasTable
         $bookdata = Booking::Skidresult($this->data['booking_invoice'])->count();
         
             if($bookdata == 1){
+                $skidresult->update([
+                    'batch_id' => Batch::Currentbatch(),
+                ]);
                 $encode = true;
+               
             };
         if (!$searchskid) {
             Skiddinginfo::create([
@@ -192,7 +197,13 @@ class Scaninvoice extends Page implements HasForms, HasTable
             ->actions([
                 DeleteAction::make()
                     ->icon('heroicon-o-x-mark')
-                    ->iconButton(),
+                    ->iconButton()
+                    ->after(function(Model $record){
+                        $updatebatchid = Booking::where('id', $record->booking_id)->get()->first();
+                        $updatebatchid->update([
+                            'batch_id' => 23
+                        ]);
+                    }),
             ])
             ->bulkActions([
                 // ...
