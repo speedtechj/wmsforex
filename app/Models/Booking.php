@@ -10,25 +10,18 @@ class Booking extends Model
     use HasFactory;
     protected $table = 'bookings';
     protected $guarded = [];
-    // public function skiddinginfo() : HasMany
-    // {
-    //     return $this->hasMany(Skiddinginfo::class);
-    // }
-    
     
     public function boxtype()
     {
         return $this->belongsTo(Boxtype::class);
     }
 
-    
-    
-    
+    public function scopeSkidresult($query, $booking_invoice)
+    {
+        $query->where('booking_invoice', $booking_invoice)
+            ->orWhere('manual_invoice', $booking_invoice);
+            
+    }
 
-    
-    // public function batch()
-    // {
-    //     return $this->belongsTo(Batch::class);
-    // }
    
 }

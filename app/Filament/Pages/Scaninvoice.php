@@ -62,7 +62,6 @@ class Scaninvoice extends Page implements HasForms, HasTable
                         TextInput::make('booking_invoice')
                             ->required()
                             ->numeric()
-                            ->debounce(300)
                             ->live()
                             ->label('Scan Invoice')
                             ->placeholder('Scan Invoice')
@@ -127,15 +126,10 @@ class Scaninvoice extends Page implements HasForms, HasTable
     {
        
         $this->skidno = Skidcnt::get()->first()->skid_count;
-
-        $skidresult = Booking::where('booking_invoice', $this->data['booking_invoice'])
-            ->orWhere('manual_invoice', $this->data['booking_invoice'])
-            ->get()->first();
-        $searchskid = Skiddinginfo::where('virtual_invoice', $this->data['booking_invoice'])
-            ->get()->first();
-            $bookdata = Booking::where('booking_invoice', $this->data['booking_invoice'])
-            ->orWhere('manual_invoice', $this->data['booking_invoice'])
-            ->count();
+        $skidresult = Booking::Skidresult($this->data['booking_invoice'])->get()->first();
+        $searchskid = Skiddinginfo::Searchskid($this->data['booking_invoice'])->get()->first();
+        $bookdata = Booking::Skidresult($this->data['booking_invoice'])->count();
+        
             if($bookdata == 1){
                 $encode = true;
             };
