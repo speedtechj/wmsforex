@@ -65,7 +65,6 @@ class SkiddinginfoResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('virtual_invoice')
                     ->label('Invoice')
-                    ->summarize(Average::make())
                     ->searchable(),
                 Tables\Columns\TextColumn::make('booking.boxtype.description')
                     ->numeric()

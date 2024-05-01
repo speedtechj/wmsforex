@@ -200,9 +200,12 @@ class Scaninvoice extends Page implements HasForms, HasTable
                     ->iconButton()
                     ->after(function(Model $record){
                         $updatebatchid = Booking::where('id', $record->booking_id)->get()->first();
-                        $updatebatchid->update([
-                            'batch_id' => 23
-                        ]);
+                        if($updatebatchid){
+                            $updatebatchid->update([
+                                'batch_id' => 23
+                            ]);
+                        }
+                       
                     }),
             ])
             ->bulkActions([

@@ -28,7 +28,11 @@ class SkidweightResource extends Resource
     {
         return $form
             ->schema([
-                
+                Forms\Components\TextInput::make('weight')
+                    ->label('Weight')
+                    ->required()
+                    ->numeric()
+                    
             ]);
     }
 
