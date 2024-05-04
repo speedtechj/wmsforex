@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Skidsummary extends Model
 {
     use HasFactory;
-    protected $table = 'Skidweights';
+    protected $table = 'skidweights';
     protected $guarded = [];
     public function booking() : BelongsTo
     {
