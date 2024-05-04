@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('boxtype_id')->nullable();
             $table->boolean('is_encode')->default(false);
             $table->foreignId('user_id')->constrained();
+            $table->bigInteger('quantity')->default(1);
             $table->timestamps();
         });
     }

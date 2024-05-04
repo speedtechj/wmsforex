@@ -27,6 +27,7 @@ class ListSkidweights extends ListRecords
                 $query->where('batch_id', Batch::currentbatch());
             })->badge('Total Skid'. ' ' . Skidweight::query()->where('batch_id', Batch::currentbatch())->count()),
         ];
+       
         
     }
 }
