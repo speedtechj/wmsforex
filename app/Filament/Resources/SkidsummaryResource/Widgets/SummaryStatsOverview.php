@@ -19,7 +19,7 @@ class SummaryStatsOverview extends BaseWidget
     }
     protected function getStats(): array
     {
-        $batch_current = $this->getPageTableQuery()->get()->first()->batch_id;
+        $batch_current = $this->getPageTableQuery()->get()->first()->batch_id ?? Batch::currentbatch();
         $totalbox = Skiddinginfo::where('batch_id', $batch_current)->count();
        $totalweight = $this->getPageTableQuery()->sum('weight');
       
