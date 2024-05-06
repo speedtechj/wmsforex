@@ -47,9 +47,9 @@ class SkiddinginfoResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-        ->filtersLayout(FiltersLayout::AboveContentCollapsible)
+            ->filtersLayout(FiltersLayout::AboveContentCollapsible)
             ->groups([
-                
+
                 Group::make('skidno')
                     ->collapsible()
                     ->getDescriptionFromRecordUsing(fn(Model $record): string => "Total" . " - " . Skiddinginfo::query()->where('skidno', $record->skidno)
@@ -59,22 +59,24 @@ class SkiddinginfoResource extends Resource
 
             // ->query(Skiddinginfo::query()->where('batch_id', Batch::currentbatch()))
             ->columns([
+                Tables\Columns\TextColumn::make('batch.batchno')
+                    ->label('Batch Number')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('skidno')
                     ->label('Skid Number')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('booking.boxtype.description')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('virtual_invoice')
                     ->label('Invoice')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('booking.boxtype.description')
-                    ->numeric()
-                    ->sortable(),
+
                 Tables\Columns\IconColumn::make('is_encode')
                     ->label('Verified')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('batch.batchno')
-                    ->label('Batch Number')
-                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('user.full_name')
                     ->label('Encoded By')
                     ->sortable(),
@@ -88,11 +90,11 @@ class SkiddinginfoResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-               
+
                 // ->query(fn (Builder $query): Builder => $query->where('batch_id', Batch::currentbatch()))->default(),
                 Filter::make('is_encode')->label('Not Encoded')
                     ->query(fn(Builder $query): Builder => $query->where('is_encode', false)),
-                    SelectFilter::make('batch_id')
+                SelectFilter::make('batch_id')
                     ->multiple()
                     ->options(Batch::all()->pluck('batchno', 'id'))
                     ->searchable()
@@ -147,14 +149,14 @@ class SkiddinginfoResource extends Resource
                                             ->title('New Skid Saved successfully')
                                             ->success()
                                             ->send();
-                                    }else {
+                                    } else {
                                         Notification::make()
                                             ->title('skid Number already Exist')
                                             ->success()
                                             ->send();
                                     };
-                                  
-                        
+
+
                                 })->createOptionModalHeading('Create New Skid Number'),
                         ])
                         ->action(function (Model $record, Get $get, array $data) {

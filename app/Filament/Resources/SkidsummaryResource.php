@@ -37,6 +37,8 @@ class SkidsummaryResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('batch.batchno')
+                    ->numeric(),
                 Tables\Columns\TextColumn::make('skid_no'),
                 Tables\Columns\TextColumn::make('totalbox')
                     ->label('Total Box')
@@ -47,8 +49,7 @@ class SkidsummaryResource extends Resource
                     
                         
                 Tables\Columns\TextColumn::make('weight'),
-                Tables\Columns\TextColumn::make('batch.batchno')
-                    ->numeric(),
+                
             ])
             ->filters([
                 //
