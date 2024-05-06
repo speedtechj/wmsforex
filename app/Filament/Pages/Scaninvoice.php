@@ -130,9 +130,9 @@ class Scaninvoice extends Page implements HasForms, HasTable
         $this->skidno = Skidcnt::get()->first()->skid_count;
         $skidresult = Booking::Skidresult($this->data['booking_invoice'])->get()->first();
         $searchskid = Skiddinginfo::Searchskid($this->data['booking_invoice'])->get()->first();
-        $bookdata = Booking::Skidresult($this->data['booking_invoice'])->count();
+        $bookdata = Booking::Skidresult($this->data['booking_invoice'])->exists();
         
-            if($bookdata == 1){
+            if($bookdata){
                 $skidresult->update([
                     'batch_id' => Batch::Currentbatch(),
                 ]);
