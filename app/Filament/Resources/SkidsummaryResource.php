@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\Skidweight;
 use Closure;
 use Filament\Forms;
 use Filament\Tables;
@@ -36,6 +37,7 @@ class SkidsummaryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(Skidweight::query()->where('batch_id', Batch::currentbatch()))
             ->columns([
                 Tables\Columns\TextColumn::make('batch.batchno')
                     ->numeric(),
