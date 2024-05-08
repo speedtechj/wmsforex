@@ -46,6 +46,7 @@ class SkidmanifestResource extends Resource
                     ->numeric()
                     ->sortable(),
                     Tables\Columns\IconColumn::make('match')
+                    ->sortable()
                     ->label('Match')
                     ->boolean()
                     ->getStateUsing(function (Model $record): bool {
