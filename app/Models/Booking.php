@@ -20,9 +20,10 @@ class Booking extends Model
 
     public function scopeSkidresult($query, $booking_invoice)
     {
-        $query->where('booking_invoice', $booking_invoice)
+      return $query->where('booking_invoice', $booking_invoice)
             ->orWhere('manual_invoice', $booking_invoice);
-            
+          
+        
     }
 
    
