@@ -75,12 +75,7 @@ class SkiddinginfoResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('cbm')
                     ->label('Cbm'),
-                    // ->getStateUsing(function (Model $record): float {
-                    //     $boxlength = $record->booking->boxtype->lenght ?? 0;
-                    //     $boxwidth = $record->booking->boxtype->width ?? 0;
-                    //     $boxheight = $record->booking->boxtype->height ?? 0;
-                    //     return $boxcbm = round($boxlength * $boxwidth * $boxheight / 61024, 2);
-                    // }),
+                   
                 Tables\Columns\IconColumn::make('is_encode')
                     ->label('Verified')
                     ->boolean(),

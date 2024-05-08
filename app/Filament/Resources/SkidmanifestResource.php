@@ -10,6 +10,7 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\Skidmanifest;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -26,7 +27,10 @@ class SkidmanifestResource extends Resource
     {
         return $form
             ->schema([
-               
+                Forms\Components\TextInput::make('skidno'),
+                Forms\Components\TextInput::make('virtual_invoice'),
+                Forms\Components\Select::make('batch_id')
+                ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
             ]);
     }
 
