@@ -57,9 +57,10 @@ class SkidmanifestResource extends Resource
                     }),
                     Tables\Columns\IconColumn::make('is_encode')
                     ->label('Encoded')
-                    ->boolean()
+                    ->boolean(),
                 
-               
+                    Tables\Columns\TextColumn::make('created_at'),
+                    Tables\Columns\TextColumn::make('updated_at')
                
                 
             ])
