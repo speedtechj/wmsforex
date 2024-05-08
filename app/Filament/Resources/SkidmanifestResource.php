@@ -47,15 +47,16 @@ class SkidmanifestResource extends Resource
                     ->numeric()
                     ->sortable(),
                     Tables\Columns\IconColumn::make('match')
-                   
                     ->label('Match')
                     ->boolean()
                     ->getStateUsing(function (Model $record): bool {
-                       $test = Booking::where(['id' => $record->booking_id,'batch_id' => Batch::Currentbatch()])
+                       $compresult = Booking::where(['id' => $record->booking_id,'batch_id' => Batch::Currentbatch()])
                        ->exists();
-                       return $test;
+                       return $compresult;
                        
                     }),
+                    Tables\Columns\IconColumn::make('is_encode')
+                    ->label('Encoded')
                 
                
                
