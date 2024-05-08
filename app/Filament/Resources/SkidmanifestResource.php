@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
+use App\Models\Batch;
 use App\Models\Booking;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
@@ -50,7 +51,7 @@ class SkidmanifestResource extends Resource
                     ->label('Match')
                     ->boolean()
                     ->getStateUsing(function (Model $record): bool {
-                       $test = Booking::where(['id' => $record->booking_id,'batch_id' => $record->batch_id])
+                       $test = Booking::where(['id' => $record->booking_id,'batch_id' => Batch::Currentbatch()])
                        ->exists();
                        return $test;
                        
