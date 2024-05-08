@@ -57,6 +57,7 @@ class SkidmanifestResource extends Resource
                     }),
                     Tables\Columns\IconColumn::make('is_encode')
                     ->label('Encoded')
+                    ->boolean()
                 
                
                
