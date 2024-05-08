@@ -29,9 +29,13 @@ class Boxsummary extends BaseWidget
                 Tables\Columns\TextColumn::make('booking.boxtype.description')
                     ->label('Box Type'),
                 Tables\Columns\TextColumn::make('quantity')
-                    ->label('Total')
+                    ->label('No of Boxes')
                     ->summarize(Summarizer::make()
-                        ->using(fn(Builder $query): string => $query->sum('quantity')))
+                        ->using(fn(Builder $query): string => $query->sum('quantity'))),
+                        Tables\Columns\TextColumn::make('cbm')
+                        ->label('Total Cbm')
+                        ->summarize(Summarizer::make()
+                            ->using(fn(Builder $query): string => $query->sum('cbm')))
             ]);
     }
 }
