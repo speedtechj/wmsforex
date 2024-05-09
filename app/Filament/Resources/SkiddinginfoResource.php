@@ -104,8 +104,9 @@ class SkiddinginfoResource extends Resource
 
             ])
             ->actions([
-                Tables\Actions\DeleteAction::make(),
+               
                 Tables\Actions\ActionGroup::make([
+                    Tables\Actions\DeleteAction::make(),
                     Tables\Actions\Action::make('Pull Out')
                         ->icon('heroicon-o-archive-box-x-mark')
                         ->color('primary')
