@@ -64,22 +64,20 @@ class SkiddinginfoResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('skidno')
                     ->label('Skid Number')
-                    ->numeric()
+                    ->searchable(isIndividual: true)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('booking.boxtype.description')
                     ->numeric()
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('virtual_invoice')
                     ->label('Invoice')
-                    ->searchable(),
+                    ->searchable(isIndividual: true),
                 Tables\Columns\TextColumn::make('cbm')
                     ->label('Cbm'),
                    
                 Tables\Columns\IconColumn::make('is_encode')
                     ->label('Verified')
                     ->boolean(),
-
                 Tables\Columns\TextColumn::make('user.full_name')
                     ->label('Encoded By')
                     ->sortable(),
@@ -102,7 +100,7 @@ class SkiddinginfoResource extends Resource
                     ->options(Batch::all()->pluck('batchno', 'id'))
                     ->searchable()
                     ->default(array(Batch::currentbatch())),
-
+                    
 
             ])
             ->actions([
