@@ -89,7 +89,7 @@ class SkiddinginfoResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ])->searchOnBlur()
             ->filters([
 
                 // ->query(fn (Builder $query): Builder => $query->where('batch_id', Batch::currentbatch()))->default(),
@@ -104,7 +104,7 @@ class SkiddinginfoResource extends Resource
 
             ])
             ->actions([
-                // Tables\Actions\EditAction::make()
+                Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\Action::make('Pull Out')
                         ->icon('heroicon-o-archive-box-x-mark')
