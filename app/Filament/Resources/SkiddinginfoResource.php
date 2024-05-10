@@ -99,7 +99,7 @@ class SkiddinginfoResource extends Resource
                 SelectFilter::make('batch_id')
                     ->multiple()
                     ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
-                    ->default(array(Batch::currentbatch())),
+                    ->default(array('Select Batch Number')),
 
 
             ])

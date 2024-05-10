@@ -40,6 +40,8 @@ class SkidweightResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('batch.batchno')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('skid_no'),
                 Tables\Columns\TextColumn::make('skidno')
                 ->label('Total Boxes')
@@ -47,8 +49,6 @@ class SkidweightResource extends Resource
                     return Skiddinginfo::query()->where('skidno', $record->skid_no)
                     ->where('batch_id',$record->batch_id)->count();
                 }),
-                Tables\Columns\TextColumn::make('batch.batchno')
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('weight')
                     ->label('Total Weight/lbs')
                     ->numeric()
