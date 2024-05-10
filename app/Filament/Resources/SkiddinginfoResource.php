@@ -17,6 +17,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Grouping\Group;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Notifications\Notification;
 use Filament\Tables\Enums\FiltersLayout;
@@ -74,7 +75,7 @@ class SkiddinginfoResource extends Resource
                     ->searchable(isIndividual: true),
                 Tables\Columns\TextColumn::make('cbm')
                     ->label('Cbm'),
-                   
+
                 Tables\Columns\IconColumn::make('is_encode')
                     ->label('Verified')
                     ->boolean(),
@@ -97,14 +98,13 @@ class SkiddinginfoResource extends Resource
                     ->query(fn(Builder $query): Builder => $query->where('is_encode', false)),
                 SelectFilter::make('batch_id')
                     ->multiple()
-                    ->options(Batch::all()->pluck('batchno', 'id'))
-                    ->searchable()
+                    ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
                     ->default(array(Batch::currentbatch())),
-                    
+
 
             ])
             ->actions([
-               
+
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\DeleteAction::make(),
                     Tables\Actions\Action::make('Pull Out')
@@ -135,7 +135,9 @@ class SkiddinginfoResource extends Resource
                                     Forms\Components\TextInput::make('new_skidno')
                                         ->required()
                                         ->maxLength(255),
-                                ])->createOptionUsing(function (array $data, Get $get) {
+                                ])
+                                ->disabled(fn(Get $get): bool => $get('batch_id') === null)
+                                ->createOptionUsing(function (array $data, Get $get) {
                                     $skidweight_skidno = Skidweight::query()
                                         ->where('batch_id', $get('batch_id'))
                                         ->where('skid_no', $data['new_skidno'])->count();
@@ -173,7 +175,68 @@ class SkiddinginfoResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('Move')
+                        ->icon('heroicon-o-arrow-right-start-on-rectangle')
+                        ->color('primary')
+                        ->form([
+                            Section::make()
+                                ->schema([
+                                    Forms\Components\Select::make('batch_id')
+                                        ->live()
+                                        ->label('Select Batch Number')
+                                        ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
+                                        ->required(),
+                                    Forms\Components\Select::make('skidno')
+                                        ->required()
+                                        ->label('Skid Number')
+                                        ->options(fn(Get $get): Collection => Skidweight::query()
+                                            ->where('batch_id', $get('batch_id'))
+                                            ->pluck('skid_no', 'skid_no'))
+                                            ->createOptionForm([
+                                                Forms\Components\TextInput::make('new_skidno')
+                                                    ->required()
+                                                    ->maxLength(255),
+                                            ])
+                                            ->disabled(fn(Get $get): bool => $get('batch_id') === null)
+                                            ->createOptionUsing(function (array $data, Get $get) {
+                                               
+                                                $skidweight_skidno = Skidweight::query()
+                                                    ->where('batch_id', $get('batch_id'))
+                                                    ->where('skid_no', $data['new_skidno'])->count();
+                                                if ($skidweight_skidno == 0) {
+                                                    Skidweight::create([
+                                                        'skid_no' => $data['new_skidno'],
+                                                        'batch_id' => $get('batch_id'),
+                                                        'user_id' => auth()->id(),
+                                                        'weight' => 0,
+            
+                                                    ]);
+                                                    Notification::make()
+                                                        ->title('New Skid Saved successfully')
+                                                        ->success()
+                                                        ->send();
+                                                } else {
+                                                    Notification::make()
+                                                        ->title('skid Number already Exist')
+                                                        ->success()
+                                                        ->send();
+                                                };
+            
+            
+                                            })->createOptionModalHeading('Create New Skid Number'),
+                                ])
+
+                        ])->action(function (Collection $records, array $data): void {
+                            foreach ($records as $record) {
+                                $record->update([
+                                    'batch_id' => $data['batch_id'],
+                                    'skidno' => $data['skidno'],
+                                ]);
+                                $record->booking->update(['batch_id' => $data['batch_id']]);
+                            }
+
+                        })
+
                 ]),
             ]);
     }
