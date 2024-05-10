@@ -39,6 +39,8 @@ class ManifestskidResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('manual_invoice')
                     ->searchable(),
+                    Tables\Columns\TextColumn::make('batch.batchno')
+                    ->searchable(),
                     Tables\Columns\IconColumn::make('match')
                     ->boolean()
                     ->getStateUsing(function (Model $record): bool {
