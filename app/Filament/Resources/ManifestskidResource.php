@@ -42,7 +42,7 @@ class ManifestskidResource extends Resource
                     Tables\Columns\IconColumn::make('match')
                     ->boolean()
                     ->getStateUsing(function (Model $record): bool {
-                        $compresult = Skiddinginfo::where(['booking_id' => $record->id,'batch_id' => Batch::Currentbatch()])
+                        $compresult = Skiddinginfo::where(['booking_id' => $record->id,'batch_id' => $record->batch_id])
                         ->exists();
                         return $compresult;
                         

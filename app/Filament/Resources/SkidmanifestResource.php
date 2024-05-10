@@ -55,7 +55,7 @@ class SkidmanifestResource extends Resource
                     ->label('Match')
                     ->boolean()
                     ->getStateUsing(function (Model $record): bool {
-                       $compresult = Booking::where(['id' => $record->booking_id,'batch_id' => Batch::Currentbatch()])
+                       $compresult = Booking::where(['id' => $record->booking_id,'batch_id' => $record->batch_id])
                        ->exists();
                        return $compresult;
                        
