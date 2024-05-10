@@ -2,12 +2,12 @@
 
 namespace App\Filament\Resources;
 
-use App\Models\Skidweight;
 use Closure;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Batch;
 use Filament\Forms\Form;
+use App\Models\Skidweight;
 use Filament\Tables\Table;
 use App\Models\Skidsummary;
 
@@ -16,6 +16,7 @@ use Filament\Resources\Resource;
 use Illuminate\Database\Query\Builder;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\Summarizers\Summarizer;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -37,7 +38,7 @@ class SkidsummaryResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(Skidweight::query()->where('batch_id', Batch::currentbatch()))
+          
             ->columns([
                 Tables\Columns\TextColumn::make('batch.batchno')
                     ->numeric(),
@@ -54,7 +55,10 @@ class SkidsummaryResource extends Resource
                 
             ])
             ->filters([
-                //
+                SelectFilter::make('batch_id')
+                ->multiple()
+                ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
+                ->default(array('Select Batch Number')),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),

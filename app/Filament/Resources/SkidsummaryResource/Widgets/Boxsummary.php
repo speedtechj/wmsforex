@@ -7,6 +7,7 @@ use App\Models\Batch;
 use Filament\Tables\Table;
 use App\Models\Skiddinginfo;
 use Illuminate\Database\Query\Builder;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Filament\Tables\Columns\Summarizers\Summarizer;
 use Filament\Widgets\Concerns\InteractsWithPageTable;
@@ -21,7 +22,13 @@ class Boxsummary extends BaseWidget
     {
         return $table
             ->heading('Box Type Summary')
-            ->query(Skiddinginfo::query()->where('batch_id', Batch::currentbatch()))
+           ->query(Skiddinginfo::query())
+            ->filters([
+                SelectFilter::make('batch_id')
+                    ->multiple()
+                    ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
+                    ->default(array('Select Batch Number')),
+            ])
             ->defaultGroup('booking.boxtype.description')
             ->groupsOnly()
             ->columns([
@@ -36,6 +43,8 @@ class Boxsummary extends BaseWidget
                         ->label('Total Cbm')
                         ->summarize(Summarizer::make()
                             ->using(fn(Builder $query): string => $query->sum('cbm')))
-            ]);
+            ]);      
     }
+    
+
 }
