@@ -67,8 +67,9 @@ class SkidweightResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('batch_id')
-                ->options(Batch::all()->pluck('batchno', 'id'))
-                    ->searchable()
+                ->multiple()
+                ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
+                ->default(array('Select Batch Number')),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
