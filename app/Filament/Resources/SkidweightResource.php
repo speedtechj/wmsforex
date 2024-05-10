@@ -39,7 +39,6 @@ class SkidweightResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-       
             ->columns([
                 Tables\Columns\TextColumn::make('skid_no'),
                 Tables\Columns\TextColumn::make('skidno')
@@ -69,7 +68,6 @@ class SkidweightResource extends Resource
             ->filters([
                 SelectFilter::make('batch_id')
                 ->options(Batch::all()->pluck('batchno', 'id'))
-                
                     ->searchable()
             ])
             ->actions([
