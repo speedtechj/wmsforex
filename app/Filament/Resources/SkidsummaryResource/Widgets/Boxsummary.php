@@ -25,9 +25,8 @@ class Boxsummary extends BaseWidget
            ->query(Skiddinginfo::query())
             ->filters([
                 SelectFilter::make('batch_id')
-                    ->multiple()
                     ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
-                    ->default(array('Select Batch Number')),
+                    ->default(Batch::Currentbatch()),
             ])
             ->defaultGroup('booking.boxtype.description')
             ->groupsOnly()

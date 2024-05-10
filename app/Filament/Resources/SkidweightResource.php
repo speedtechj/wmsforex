@@ -66,10 +66,9 @@ class SkidweightResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('batch_id')
-                ->multiple()
+                SelectFilter::make('batch_id') 
                 ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
-                ->default(array('Select Batch Number')),
+                ->default(Batch::Currentbatch()),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
