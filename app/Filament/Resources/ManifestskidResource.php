@@ -11,6 +11,7 @@ use App\Models\Manifestskid;
 use App\Models\Skiddinginfo;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\ManifestskidResource\Pages;
@@ -56,7 +57,10 @@ class ManifestskidResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('batch_id')
+                ->multiple()
+                ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
+                ->default(array('Select Batch Number')),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
