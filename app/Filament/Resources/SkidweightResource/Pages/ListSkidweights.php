@@ -20,14 +20,14 @@ class ListSkidweights extends ListRecords
             // Actions\CreateAction::make(),
         ];
     }
-    public function getTabs(): array {
-        return [
-            'Curent Batch' => Tab::make()
-            ->modifyQueryUsing(function (Builder $query) {
-                $query->where('batch_id', Batch::currentbatch());
-            })->badge('Total Skid'. ' ' . Skidweight::query()->where('batch_id', Batch::currentbatch())->count()),
-        ];
+    // public function getTabs(): array {
+    //     return [
+    //         'Curent Batch' => Tab::make()
+    //         ->modifyQueryUsing(function (Builder $query) {
+    //             $query->where('batch_id', Batch::currentbatch());
+    //         })->badge('Total Skid'. ' ' . Skidweight::query()->where('batch_id', Batch::currentbatch())->count()),
+    //     ];
        
         
-    }
+    // }
 }
