@@ -89,8 +89,5 @@ class ManifestskidResource extends Resource
            
         ];
     }
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()->where('batch_id', Batch::Currentbatch());
-    }
+    
 }
