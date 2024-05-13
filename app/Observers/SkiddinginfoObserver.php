@@ -12,20 +12,20 @@ class SkiddinginfoObserver
      */
     public function created(Skiddinginfo $skiddinginfo): void
     {
-        
-        // if($skiddinginfo->booking->boxtype_id == 4){
-        //     $length = $skiddinginfo->booking->irregular_width;
-        //     $width = $skiddinginfo->booking->irregular_height;
-        //     $height = $skiddinginfo->booking->irregular_length;
-        //     $boxcbm = round($length * $width * $height / 61024, 2);
-        //     $skiddinginfo->update(['cbm' => $boxcbm]);
-        // }else {
+        $typebox = $skiddinginfo->booking->boxtype_id ?? 0;
+        if($typebox == 4){
+            $length = $skiddinginfo->booking->irregular_width;
+            $width = $skiddinginfo->booking->irregular_height;
+            $height = $skiddinginfo->booking->irregular_length;
+            $boxcbm = round($length * $width * $height / 61024, 2);
+            $skiddinginfo->update(['cbm' => $boxcbm]);
+        }else {
             $length = $skiddinginfo->booking->boxtype->lenght ?? 0;
             $width = $skiddinginfo->booking->boxtype->width ?? 0;
             $height = $skiddinginfo->booking->boxtype->height ?? 0;
             $boxcbm = round($length * $width * $height / 61024, 2);
             $skiddinginfo->update(['cbm' => $boxcbm]);
-        // }
+        }
     }
     /**
      * Handle the Skiddinginfo "updated" event.
