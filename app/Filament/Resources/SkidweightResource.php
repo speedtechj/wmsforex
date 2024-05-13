@@ -13,6 +13,8 @@ use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Exports\SkidweightExporter;
+use Filament\Tables\Actions\ExportBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SkidweightResource\Pages;
 use App\Filament\Resources\SkidweightResource\RelationManagers;
@@ -75,7 +77,7 @@ class SkidweightResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
+                    
                 ]),
             ]);
     }
