@@ -98,9 +98,8 @@ class SkiddinginfoResource extends Resource
                 Filter::make('is_encode')->label('Not Encoded')
                     ->query(fn(Builder $query): Builder => $query->where('is_encode', false)),
                 SelectFilter::make('batch_id')
-                    ->multiple()
                     ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
-                    ->default(array('Select Batch Number')),
+                    ->default(Batch::currentbatch()),
 
 
             ])
