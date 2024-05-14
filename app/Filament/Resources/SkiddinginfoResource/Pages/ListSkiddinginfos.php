@@ -9,9 +9,12 @@ use Filament\Resources\Pages\ListRecords;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Pages\ListRecords\Tab;
 use App\Filament\Resources\SkiddinginfoResource;
+use Filament\Pages\Concerns\ExposesTableToWidgets;
+use App\Filament\Resources\SkiddinginfoResource\Widgets\SkiddinginfoOverview;
 
 class ListSkiddinginfos extends ListRecords
 {
+    use ExposesTableToWidgets;
     protected static string $resource = SkiddinginfoResource::class;
 
     protected function getHeaderActions(): array
@@ -34,4 +37,11 @@ class ListSkiddinginfos extends ListRecords
 // {
 //     return 'All';
 // }
+protected function getHeaderWidgets(): array
+    {
+        return [
+            SkiddinginfoOverview::class,
+           
+        ];
+    }
 }
