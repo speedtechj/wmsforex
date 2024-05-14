@@ -18,4 +18,8 @@ class Skidweight extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function skiddinginfo()
+    {
+        return $this->hasMany(Skiddinginfo::class,'skidno','skid_no');
+    }
 }

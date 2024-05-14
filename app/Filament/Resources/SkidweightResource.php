@@ -10,10 +10,12 @@ use App\Models\Skidweight;
 use Filament\Tables\Table;
 use App\Models\Skiddinginfo;
 use Filament\Resources\Resource;
+use App\Exports\SkidweightsExport;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Exports\SkidweightExporter;
+use Illuminate\Database\Eloquent\Collection;
 use Filament\Tables\Actions\ExportBulkAction;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SkidweightResource\Pages;
@@ -77,7 +79,9 @@ class SkidweightResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    
+                    Tables\Actions\BulkAction::make('xls')->label('Export to Excel')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->action(fn (Collection $records) => (new SkidweightsExport($records))->download('collection.xlsx')),
                 ]),
             ]);
     }

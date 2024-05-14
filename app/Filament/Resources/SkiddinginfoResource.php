@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Grouping\Group;
+use App\Exports\SkiddinginfosExport;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
@@ -175,6 +176,9 @@ class SkiddinginfoResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\BulkAction::make('xls')->label('Export to Excel')
+                    ->icon('heroicon-o-arrow-down-tray')
+                    ->action(fn (Collection $records) => (new SkiddinginfosExport($records))->download('collection.xlsx')),
                     Tables\Actions\BulkAction::make('Move')
                         ->icon('heroicon-o-arrow-right-start-on-rectangle')
                         ->color('primary')
