@@ -85,9 +85,9 @@ class Scaninvoice extends Page implements HasForms, HasTable
                                 ->modalWidth(MaxWidth::Large)
                                 ->requiresConfirmation()
                                 ->modalDescription(function (array $data) {
-                                  $total_skid = Skiddinginfo::where('skidno', $this->skidno)
+                                  $total_box = Skiddinginfo::where('skidno', $this->skidno)
                                     ->where('batch_id', Batch::currentbatch())->count();
-                                   return 'Total Skid: '.' '.$total_skid;
+                                   return 'Total Box: '.' '.$total_box;
                                 })
                                 ->modalSubmitActionLabel('Yes, Save')
                                     ->slideOver()
