@@ -83,6 +83,13 @@ class Scaninvoice extends Page implements HasForms, HasTable
                                     
                                 })
                                 ->modalWidth(MaxWidth::Large)
+                                ->requiresConfirmation()
+                                ->modalDescription(function (array $data) {
+                                  $total_skid = Skiddinginfo::where('skidno', $this->skidno)
+                                    ->where('batch_id', Batch::currentbatch())->count();
+                                   return 'Total Skid: '.' '.$total_skid;
+                                })
+                                ->modalSubmitActionLabel('Yes, Save')
                                     ->slideOver()
                                     ->form([
                                         Section::make('Enter Weight')
@@ -90,6 +97,7 @@ class Scaninvoice extends Page implements HasForms, HasTable
                                     ])
                                     ->icon('heroicon-o-scale')
                                     ->color('danger')
+
                                     ->action(function (Component $livewire, Set $set, $state, array $data) {
                                         $skidwtresult = Skidweight::where('skid_no', $this->skidno)
                                         ->where('batch_id', 1);
@@ -105,7 +113,7 @@ class Scaninvoice extends Page implements HasForms, HasTable
                                                 'user_id' => auth()->user()->id,
                                             ]);
                                             Notification::make()
-                                                ->title('Weight Saved successfully & New skidno created')
+                                                ->title('Weight Saved successfully & New skidno created') 
                                                 ->success()
                                                 ->send();
                                             $this->resetTable();
