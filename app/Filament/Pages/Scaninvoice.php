@@ -172,6 +172,7 @@ class Scaninvoice extends Page implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
+        ->poll('10s')
             ->paginated(false)
             ->query(Skiddinginfo::query()->where('skidno', $this->skidno)->where('batch_id', Batch::currentbatch()))
             ->columns([
