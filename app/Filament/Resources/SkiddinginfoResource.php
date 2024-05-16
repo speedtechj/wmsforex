@@ -49,6 +49,7 @@ class SkiddinginfoResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+        ->deferLoading()
             ->filtersLayout(FiltersLayout::AboveContentCollapsible)
             ->groups([
 
