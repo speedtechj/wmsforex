@@ -51,6 +51,7 @@ class SkiddinginfoResource extends Resource
         return $table
         ->deferLoading()
             ->filtersLayout(FiltersLayout::AboveContentCollapsible)
+            ->paginationPageOptions([10, 25])
             ->groups([
 
                 Group::make('skidno')
