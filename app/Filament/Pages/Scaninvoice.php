@@ -84,11 +84,12 @@ class Scaninvoice extends Page implements HasForms, HasTable
                                 })
                                 ->modalWidth(MaxWidth::Large)
                                 ->requiresConfirmation()
-                                ->modalDescription(function (array $data) {
+                                ->modalHeading(function (array $data) {
                                   $total_box = Skiddinginfo::where('skidno', $this->skidno)
                                     ->where('batch_id', Batch::currentbatch())->count();
                                    return 'Total Box: '.' '.$total_box;
                                 })
+                                ->modalDescription('Please check the total box count before entering the weight.')
                                 ->modalSubmitActionLabel('Yes, Save')
                                     ->slideOver()
                                     ->form([
