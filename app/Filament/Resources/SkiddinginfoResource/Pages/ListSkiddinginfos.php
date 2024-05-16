@@ -11,7 +11,9 @@ use Filament\Resources\Pages\ListRecords\Tab;
 use App\Filament\Resources\SkiddinginfoResource;
 use Filament\Pages\Concerns\ExposesTableToWidgets;
 use App\Filament\Resources\SkiddinginfoResource\Widgets\SkiddinginfoOverview;
+use Illuminate\Contracts\Pagination\Paginator;
 
+ 
 class ListSkiddinginfos extends ListRecords
 {
     use ExposesTableToWidgets;
@@ -44,4 +46,8 @@ protected function getHeaderWidgets(): array
            
         ];
     }
+    protected function paginateTableQuery(Builder $query): Paginator
+{
+    return $query->simplePaginate(($this->getTableRecordsPerPage() === 'all') ? $query->count() : $this->getTableRecordsPerPage());
+}
 }
