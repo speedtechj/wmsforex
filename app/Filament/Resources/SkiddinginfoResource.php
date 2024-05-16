@@ -81,6 +81,7 @@ class SkiddinginfoResource extends Resource
 
                 Tables\Columns\IconColumn::make('is_encode')
                     ->label('Verified')
+                    ->sortable()
                     ->boolean(),
                 Tables\Columns\TextColumn::make('user.full_name')
                     ->label('Encoded By')
