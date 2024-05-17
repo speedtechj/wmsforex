@@ -57,7 +57,7 @@ class SkiddinginfoResource extends Resource
                 Group::make('skidno')
                     ->collapsible()
                     ->getDescriptionFromRecordUsing(fn(Model $record): string => "Total" . " - " . Skiddinginfo::query()->where('skidno', $record->skidno)
-                        ->where('batch_id', Batch::currentbatch())->count())
+                        ->where('batch_id', $record->batch_id)->count())
             ])
             ->defaultGroup('skidno')
 
