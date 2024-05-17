@@ -51,13 +51,18 @@ class SkiddinginfoResource extends Resource
         return $table
             ->deferLoading()
             ->filtersLayout(FiltersLayout::AboveContentCollapsible)
-            ->paginationPageOptions([10, 25])
+            ->paginationPageOptions([10, 25, 'all'])
             ->groups([
 
-                Group::make('skidno')
+                Group::make('skidno')  
                     ->collapsible()
-                    ->getDescriptionFromRecordUsing(fn(Model $record): string => "Total" . " - " . Skiddinginfo::query()->where('skidno', $record->skidno)
-                        ->where('batch_id', $record->batch_id)->count())
+                    ->getDescriptionFromRecordUsing(function (Model $record){
+                        $total_box = Skiddinginfo::where('skidno', $record->skidno)->where('batch_id', $record->batch_id)->count();
+                        $total_cbm = Skiddinginfo::where('skidno', $record->skidno)->where('batch_id', $record->batch_id)->sum('cbm');
+                        return "Total Box: " . $total_box . '' . " - " . "Total Cbm: " . $total_cbm;
+                    })
+                    // ->getDescriptionFromRecordUsing(fn(Model $record): string => "Total" . " - " . Skiddinginfo::query()->where('skidno', $record->skidno)
+                    //     ->where('batch_id', $record->batch_id)->count())
             ])
             ->defaultGroup('skidno')
 
