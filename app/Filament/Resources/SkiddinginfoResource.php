@@ -59,7 +59,7 @@ class SkiddinginfoResource extends Resource
                     ->getDescriptionFromRecordUsing(function (Model $record){
                         $total_box = Skiddinginfo::where('skidno', $record->skidno)->where('batch_id', $record->batch_id)->count();
                         $total_cbm = Skiddinginfo::where('skidno', $record->skidno)->where('batch_id', $record->batch_id)->sum('cbm');
-                        return "Total Box: " . $total_box . '' . " - " . "Total Cbm: " . $total_cbm;
+                        return "Total Box: " . $total_box . '   '  . "Total Cbm: " . $total_cbm;
                     })
                     // ->getDescriptionFromRecordUsing(fn(Model $record): string => "Total" . " - " . Skiddinginfo::query()->where('skidno', $record->skidno)
                     //     ->where('batch_id', $record->batch_id)->count())
