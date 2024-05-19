@@ -42,6 +42,8 @@ class SkidmanifestResource extends Resource
                 Tables\Columns\TextColumn::make('skidno')
                     ->numeric()
                     ->sortable(),
+                    Tables\Columns\TextColumn::make('booking.booking_invoice')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('virtual_invoice')
                     ->label('Invoice')
                     ->searchable(),
