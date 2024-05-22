@@ -101,7 +101,7 @@ class Scaninvoice extends Page implements HasForms, HasTable
 
                                     ->action(function (Component $livewire, Set $set, $state, array $data) {
                                         $skidwtresult = Skidweight::where('skid_no', $this->skidno)
-                                        ->where('batch_id', 1);
+                                        ->where('batch_id', Batch::currentbatch());
                                        
                                         if($skidwtresult){
                                             Skidcnt::get()->first()->update([
