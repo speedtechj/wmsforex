@@ -50,7 +50,6 @@ class SkiddinginfoResource extends Resource
     {
         return $table
             ->deferLoading()
-            ->filtersLayout(FiltersLayout::AboveContentCollapsible)
             ->paginationPageOptions([10, 25, 'all'])
             ->groups([
 
@@ -64,7 +63,9 @@ class SkiddinginfoResource extends Resource
                    
             ])
             ->defaultGroup('skidno')
-
+            // ->modifyQueryUsing(function ($query) {
+            //     return $query->with(['booking','user']);
+            // })
             // ->query(Skiddinginfo::query()->where('batch_id', Batch::currentbatch()))
             ->columns([
                 Tables\Columns\TextColumn::make('batch.batchno')

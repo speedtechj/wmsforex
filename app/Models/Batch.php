@@ -20,7 +20,6 @@ class Batch extends Model
     //     return $this->belongsTo(Skiddinginfo::class);
     // }
      
-
     public function scopeCurrentbatch($query){
         return $query->where('is_current', true)->first()->id;
     }

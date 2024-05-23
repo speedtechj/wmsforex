@@ -17,6 +17,7 @@ class Booking extends Model
     {
         return $this->belongsTo(Boxtype::class);
     }
+    
 
     public function scopeSkidresult($query, $booking_invoice)
     {
