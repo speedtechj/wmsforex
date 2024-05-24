@@ -4,11 +4,14 @@ namespace App\Models;
 
 use App\Models\Scopes\InvloadedScope;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 #[ScopedBy([InvloadedScope::class])]
 class Booking extends Model
 {
+    use SoftDeletes;
     use HasFactory;
     protected $table = 'bookings';
     protected $guarded = [];
