@@ -80,6 +80,7 @@ class SkiddinginfoResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('virtual_invoice')
                     ->label('Invoice')
+                    ->sortable()
                     ->searchable(isIndividual: true),
                 Tables\Columns\TextColumn::make('cbm')
                     ->label('Cbm'),
@@ -156,7 +157,7 @@ class SkiddinginfoResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\BulkAction::make('xls')->label('Export to Excel')
                         ->icon('heroicon-o-arrow-down-tray')
-                        ->action(fn(Collection $records) => (new SkiddinginfosExport($records))->download('collection.xlsx')),
+                        ->action(fn(Collection $records) => (new SkiddinginfosExport($records))->download('skidding.xlsx')),
                     Tables\Actions\BulkAction::make('Move')
                         ->icon('heroicon-o-arrow-right-start-on-rectangle')
                         ->color('primary')
