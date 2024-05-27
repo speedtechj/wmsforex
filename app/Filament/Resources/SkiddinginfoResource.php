@@ -145,10 +145,12 @@ class SkiddinginfoResource extends Resource
                                 'batch_id' => $data['batch_id'],
                                 'skidno' => $data['skidno'],
                             ]);
-                            $record->booking->update(['batch_id' => $data['batch_id']]);
+                            if($record->booking != null){
+                                $record->booking->update(['batch_id' => $data['batch_id']]);
+                            }
+                            
                         }),
-                ])->visible(fn(Model $record): bool => $record->is_encode == true),
-
+                    ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -172,38 +174,6 @@ class SkiddinginfoResource extends Resource
                                         ->options(fn(Get $get): Collection => Skidweight::query()
                                             ->where('batch_id', $get('batch_id'))
                                             ->pluck('skid_no', 'skid_no'))
-                                        ->createOptionForm([
-                                            Forms\Components\TextInput::make('new_skidno')
-                                                ->required()
-                                                ->maxLength(255),
-                                        ])
-                                        ->disabled(fn(Get $get): bool => $get('batch_id') === null)
-                                        ->createOptionUsing(function (array $data, Get $get) {
-
-                                            $skidweight_skidno = Skidweight::query()
-                                                ->where('batch_id', $get('batch_id'))
-                                                ->where('skid_no', $data['new_skidno'])->count();
-                                            if ($skidweight_skidno == 0) {
-                                                Skidweight::create([
-                                                    'skid_no' => $data['new_skidno'],
-                                                    'batch_id' => $get('batch_id'),
-                                                    'user_id' => auth()->id(),
-                                                    'weight' => 0,
-
-                                                ]);
-                                                Notification::make()
-                                                    ->title('New Skid Saved successfully')
-                                                    ->success()
-                                                    ->send();
-                                            } else {
-                                                Notification::make()
-                                                    ->title('skid Number already Exist')
-                                                    ->success()
-                                                    ->send();
-                                            };
-
-
-                                        })->createOptionModalHeading('Create New Skid Number'),
                                 ])
 
                         ])->action(function (Collection $records, array $data): void {
@@ -212,7 +182,10 @@ class SkiddinginfoResource extends Resource
                                     'batch_id' => $data['batch_id'],
                                     'skidno' => $data['skidno'],
                                 ]);
+                                
+                                if($record->booking != null){
                                 $record->booking->update(['batch_id' => $data['batch_id']]);
+                                }
                             }
                             Notification::make()
                                 ->title('Invoice Moved successfully')
