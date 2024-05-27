@@ -60,9 +60,8 @@ class ManifestskidResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('batch_id')
-                ->multiple()
                 ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
-                ->default(array('Select Batch Number')),
+                ->default(Batch::currentbatch()),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
