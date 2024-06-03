@@ -11,6 +11,7 @@ use Filament\Forms\Form;
 use App\Models\Skidweight;
 use Filament\Tables\Table;
 use App\Models\Skiddinginfo;
+use App\Models\Warehouseuser;
 use Filament\Resources\Resource;
 use Illuminate\Support\Collection;
 use Filament\Tables\Filters\Filter;
@@ -115,7 +116,7 @@ class SkiddinginfoResource extends Resource
             ->actions([
 
                 Tables\Actions\ActionGroup::make([
-                    Tables\Actions\DeleteAction::make(),
+                    // Tables\Actions\DeleteAction::make(),
                     Tables\Actions\Action::make('Pull Out')
                         ->icon('heroicon-o-archive-box-x-mark')
                         ->color('primary')
