@@ -87,7 +87,9 @@ class SkidweightResource extends Resource
                             ->schema([
                                 Select::make('batch_id')
                                     ->label('Select Batch')
-                                    ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
+                                    ->options(Batch::query()->where('is_lock', false)
+                                    ->where('id', '!=', Batch::Currentbatch())
+                                    ->pluck('batchno', 'id'))
                                     ->searchable()
                             ])
 
