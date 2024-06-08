@@ -11,7 +11,10 @@ use Filament\Tables\Table;
 use App\Models\Skiddinginfo;
 use Filament\Resources\Resource;
 use App\Exports\SkidweightsExport;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Section;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Notifications\Notification;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Exports\SkidweightExporter;
@@ -36,7 +39,7 @@ class SkidweightResource extends Resource
                     ->label('Weight')
                     ->required()
                     ->numeric()
-                    
+
             ]);
     }
 
@@ -48,11 +51,11 @@ class SkidweightResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('skid_no'),
                 Tables\Columns\TextColumn::make('skidno')
-                ->label('Total Boxes')
-                ->getStateUsing(function (Model $record) {
-                    return Skiddinginfo::query()->where('skidno', $record->skid_no)
-                    ->where('batch_id',$record->batch_id)->count();
-                }),
+                    ->label('Total Boxes')
+                    ->getStateUsing(function (Model $record) {
+                        return Skiddinginfo::query()->where('skidno', $record->skid_no)
+                            ->where('batch_id', $record->batch_id)->count();
+                    }),
                 Tables\Columns\TextColumn::make('weight')
                     ->label('Total Weight/lbs')
                     ->numeric()
@@ -70,18 +73,58 @@ class SkidweightResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                SelectFilter::make('batch_id') 
-                ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
-                ->default(Batch::Currentbatch()),
+                SelectFilter::make('batch_id')
+                    ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
+                    ->default(Batch::Currentbatch()),
+            ])
+            ->headerActions([
+                Tables\Actions\Action::make('New Skid')
+                    ->requiresConfirmation()
+                    ->slideOver()
+                    ->label('Create New Skid')
+                    ->form([
+                        Section::make()
+                            ->schema([
+                                Select::make('batch_id')
+                                    ->label('Select Batch')
+                                    ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
+                                    ->searchable()
+                            ])
+
+                    ])
+                    ->action(function (array $data) {
+
+                        $last_skid = Skidweight::where('batch_id', $data['batch_id'])->latest()->first();
+
+                        Skidweight::create([
+                            'batch_id' => $data['batch_id'],
+                            'skid_no' => $last_skid->skid_no + 1,
+                            'weight' => 0,
+                            'user_id' => auth()->id(),
+                        ]);
+
+                        Notification::make()
+                            ->title('Saved successfully')
+                            ->success()
+                            ->send();
+
+                    }),
+
             ])
             ->actions([
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->requiresConfirmation()
+                    ->visible(function (Model $record) {
+                        $skidcount = Skiddinginfo::query()->where('skidno', $record->skid_no)
+                            ->where('batch_id', $record->batch_id)->count();
+                        return $skidcount ?? false;
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\BulkAction::make('xls')->label('Export to Excel')
-                    ->icon('heroicon-o-arrow-down-tray')
-                    ->action(fn (Collection $records) => (new SkidweightsExport($records))->download('collection.xlsx')),
+                        ->icon('heroicon-o-arrow-down-tray')
+                        ->action(fn(Collection $records) => (new SkidweightsExport($records))->download('collection.xlsx')),
                 ]),
             ]);
     }

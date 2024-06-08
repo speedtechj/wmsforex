@@ -54,14 +54,14 @@ class SkiddinginfoResource extends Resource
             ->paginationPageOptions([10, 25, 'all'])
             ->groups([
 
-                Group::make('skidno')  
+                Group::make('skidno')
                     ->collapsible()
-                    ->getDescriptionFromRecordUsing(function (Model $record){
+                    ->getDescriptionFromRecordUsing(function (Model $record) {
                         $total_box = Skiddinginfo::where('skidno', $record->skidno)->where('batch_id', $record->batch_id)->count();
                         $total_cbm = Skiddinginfo::where('skidno', $record->skidno)->where('batch_id', $record->batch_id)->sum('cbm');
-                        return "Total Box: " . $total_box . '   '  . "Total Cbm: " . $total_cbm;
+                        return "Total Box: " . $total_box . '   ' . "Total Cbm: " . $total_cbm;
                     })
-                   
+
             ])
             ->defaultGroup('skidno')
             // ->modifyQueryUsing(function ($query) {
@@ -116,7 +116,10 @@ class SkiddinginfoResource extends Resource
             ->actions([
 
                 Tables\Actions\ActionGroup::make([
-                    // Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\DeleteAction::make()
+                        ->visible(function (Model $record) {
+                            return !$record->is_encode ?? true;
+                        }),
                     Tables\Actions\Action::make('Pull Out')
                         ->icon('heroicon-o-archive-box-x-mark')
                         ->color('primary')
@@ -147,12 +150,12 @@ class SkiddinginfoResource extends Resource
                                 'batch_id' => $data['batch_id'],
                                 'skidno' => $data['skidno'],
                             ]);
-                            if($record->booking != null){
+                            if ($record->booking != null) {
                                 $record->booking->update(['batch_id' => $data['batch_id']]);
                             }
-                            
+
                         }),
-                    ]),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -184,9 +187,9 @@ class SkiddinginfoResource extends Resource
                                     'batch_id' => $data['batch_id'],
                                     'skidno' => $data['skidno'],
                                 ]);
-                                
-                                if($record->booking != null){
-                                $record->booking->update(['batch_id' => $data['batch_id']]);
+
+                                if ($record->booking != null) {
+                                    $record->booking->update(['batch_id' => $data['batch_id']]);
                                 }
                             }
                             Notification::make()
