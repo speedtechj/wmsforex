@@ -117,7 +117,7 @@ class SkidweightResource extends Resource
                     ->visible(function (Model $record) {
                         $skidcount = Skiddinginfo::query()->where('skidno', $record->skid_no)
                             ->where('batch_id', $record->batch_id)->count();
-                        return $skidcount ?? false;
+                        return $skidcount ?? true;
                     }),
             ])
             ->bulkActions([
