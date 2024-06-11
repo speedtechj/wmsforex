@@ -14,6 +14,7 @@ use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Filters\TernaryFilter;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SkidmanifestResource\Pages;
 use App\Filament\Resources\SkidmanifestResource\RelationManagers;
@@ -72,6 +73,7 @@ class SkidmanifestResource extends Resource
                 
             ])
             ->filters([
+                TernaryFilter::make('is_encode'),
                 SelectFilter::make('batch_id')
                 ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
                 ->default(Batch::currentbatch()),
