@@ -73,7 +73,11 @@ class SkidmanifestResource extends Resource
                 
             ])
             ->filters([
-                TernaryFilter::make('is_encode'),
+                TernaryFilter::make('is_encode')
+                ->label('Encoded')
+                ->placeholder('All')
+                ->trueLabel('Encoded')
+                ->falseLabel('Not Encoded'),
                 SelectFilter::make('batch_id')
                 ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
                 ->default(Batch::currentbatch()),
