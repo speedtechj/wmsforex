@@ -59,10 +59,13 @@ class BatchResource extends Resource
                 ->sortable(),
                 Tables\Columns\ToggleColumn::make('is_current')
                 ->afterStateUpdated(function ($record, $state) {
-                    $checkstatus = Batch::where('is_current', true)->count();
-                    if ($checkstatus > 1) {
+                    $get_last_batch = Batch::all()->last();
+                   
+                    if($get_last_batch->id != $record->id){
                         return $record->update(['is_current' => false]);
+
                     }
+                    
                 })
                 ->label('Ope Batch'),
                 Tables\Columns\TextColumn::make('user.full_name')
