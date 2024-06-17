@@ -124,8 +124,8 @@ class SkiddinginfoResource extends Resource
                         ->icon('heroicon-o-archive-box-x-mark')
                         ->color('primary')
                         ->requiresConfirmation()
-                        ->action(function (Model $record) {
-                            $record->booking->update(['batch_id' => 23]);
+                        ->action(function (Model $record, Get $get, array $data) {
+                            $record->update(['batch_id' => 23]);
                             $record->delete();
                         }),
                     Tables\Actions\Action::make('Move')
