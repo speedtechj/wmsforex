@@ -102,6 +102,8 @@ class SkiddinginfoResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])->searchOnBlur()
+            ->defaultPaginationPageOption(5)
+            ->paginated([10, 25, 50, 100,200,400,600])
             ->filters([
 
                 // ->query(fn (Builder $query): Builder => $query->where('batch_id', Batch::currentbatch()))->default(),
