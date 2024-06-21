@@ -46,12 +46,12 @@ protected function getHeaderWidgets(): array
            
         ];
     }
-//     protected function paginateTableQuery(Builder $query): Paginator
-// {
-//     return $query->simplePaginate(($this->getTableRecordsPerPage() === 'all') ? $query->count() : $this->getTableRecordsPerPage());
-// }
-protected function paginateTableQuery(Builder $query): Paginator
+    protected function paginateTableQuery(Builder $query): Paginator
 {
-    return $query->fastPaginate($this->getTableRecordsPerPage());
+    return $query->simplePaginate(($this->getTableRecordsPerPage() === 'all') ? $query->count() : $this->getTableRecordsPerPage());
 }
+// protected function paginateTableQuery(Builder $query): Paginator
+// {
+//     return $query->fastPaginate($this->getTableRecordsPerPage());
+// }
 }
