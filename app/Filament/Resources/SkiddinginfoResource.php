@@ -64,6 +64,8 @@ class SkiddinginfoResource extends Resource
 
             ])
             ->defaultGroup('skidno')
+            ->defaultPaginationPageOption(5)
+            ->paginated([5, 10, 25, 50, 100,200,400])
             // ->modifyQueryUsing(function ($query) {
             //     return $query->with(['booking','user']);
             // })
@@ -102,8 +104,7 @@ class SkiddinginfoResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])->searchOnBlur()
-            ->defaultPaginationPageOption(5)
-            ->paginated([10, 25, 50, 100,200,400,600])
+           
             ->filters([
 
                 // ->query(fn (Builder $query): Builder => $query->where('batch_id', Batch::currentbatch()))->default(),
