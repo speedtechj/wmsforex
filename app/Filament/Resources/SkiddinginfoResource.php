@@ -57,9 +57,9 @@ class SkiddinginfoResource extends Resource
                 Group::make('skidno')
                     ->collapsible()
                     ->getDescriptionFromRecordUsing(function (Model $record) {
-                        // $total_box = Skiddinginfo::where('skidno', $record->skidno)->where('batch_id', $record->batch_id)->count();
-                        // $total_cbm = Skiddinginfo::where('skidno', $record->skidno)->where('batch_id', $record->batch_id)->sum('cbm');
-                        // return "Total Box: " . $total_box . '   ' . "Total Cbm: " . $total_cbm;
+                        $total_box = Skiddinginfo::where('skidno', $record->skidno)->where('batch_id', $record->batch_id)->count();
+                        $total_cbm = Skiddinginfo::where('skidno', $record->skidno)->where('batch_id', $record->batch_id)->sum('cbm');
+                        return "Total Box: " . $total_box . '   ' . "Total Cbm: " . $total_cbm;
                     })
 
             ])
