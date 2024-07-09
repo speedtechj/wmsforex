@@ -18,6 +18,7 @@ use Filament\Tables\Filters\TernaryFilter;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SkidmanifestResource\Pages;
 use App\Filament\Resources\SkidmanifestResource\RelationManagers;
+use Illuminate\Support\HtmlString;
 
 class SkidmanifestResource extends Resource
 {
@@ -54,6 +55,9 @@ class SkidmanifestResource extends Resource
                 Tables\Columns\TextColumn::make('booking.boxtype.description')
                     ->numeric()
                     ->sortable(),
+                    Tables\Columns\IconColumn::make('booking.is_paid')
+                    ->label('Paid')
+                    ->boolean(),
                     Tables\Columns\IconColumn::make('match')
                     ->label('Match')
                     ->boolean()
