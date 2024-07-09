@@ -10,6 +10,8 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\Skidmanifest;
 use Filament\Resources\Resource;
+use Illuminate\Support\HtmlString;
+use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Tables\Filters\SelectFilter;
@@ -18,7 +20,6 @@ use Filament\Tables\Filters\TernaryFilter;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\SkidmanifestResource\Pages;
 use App\Filament\Resources\SkidmanifestResource\RelationManagers;
-use Illuminate\Support\HtmlString;
 
 class SkidmanifestResource extends Resource
 {
@@ -70,13 +71,16 @@ class SkidmanifestResource extends Resource
                     Tables\Columns\IconColumn::make('is_encode')
                     ->label('Encoded')
                     ->boolean(),
-                
+                    Tables\Columns\ToggleColumn::make('is_checked'),
                     Tables\Columns\TextColumn::make('created_at'),
                     Tables\Columns\TextColumn::make('updated_at')
                
                 
             ])
             ->filters([
+                Filter::make('is_checked')
+    ->query(fn (Builder $query): Builder => $query->where('is_checked', false))
+    ->default(false),
                 TernaryFilter::make('is_encode')
                 ->label('Encoded')
                 ->placeholder('All')
