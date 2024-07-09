@@ -39,6 +39,7 @@ class SkiddinginfosExport implements ShouldAutoSize, FromQuery, WithMapping, Wit
             $skiddinginfo->virtual_invoice ?? ' ',
             $skiddinginfo->booking->boxtype->description ?? '',
             $skiddinginfo->cbm,
+            $skiddinginfo->is_encode ? 'Ok' : 'Not Ok',
             
             // $booking->manual_invoice,
             
@@ -55,6 +56,7 @@ class SkiddinginfosExport implements ShouldAutoSize, FromQuery, WithMapping, Wit
             'Invoice',
             'Box Type',
             'CBM',
+            'Check'
               
         ];
     }
