@@ -45,8 +45,8 @@ class SkidmanifestResource extends Resource
                 Tables\Columns\TextColumn::make('skidno')
                     ->numeric()
                     ->sortable(),
-                    Tables\Columns\TextColumn::make('booking.booking_invoice')
-                    ->sortable(),
+                    // Tables\Columns\TextColumn::make('booking.booking_invoice')
+                    // ->sortable(),
                 Tables\Columns\TextColumn::make('virtual_invoice')
                     ->label('Invoice')
                     ->searchable(),
@@ -72,8 +72,8 @@ class SkidmanifestResource extends Resource
                     ->label('Encoded')
                     ->boolean(),
                     Tables\Columns\ToggleColumn::make('is_checked'),
-                    Tables\Columns\TextColumn::make('created_at'),
-                    Tables\Columns\TextColumn::make('updated_at')
+                    Tables\Columns\TextColumn::make('created_at')->toggleable(isToggledHiddenByDefault: true),
+                    Tables\Columns\TextColumn::make('updated_at')->toggleable(isToggledHiddenByDefault: true),
                
                 
             ])
@@ -91,11 +91,11 @@ class SkidmanifestResource extends Resource
                 ->default(Batch::currentbatch()),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -112,7 +112,7 @@ class SkidmanifestResource extends Resource
         return [
             'index' => Pages\ListSkidmanifests::route('/'),
             'create' => Pages\CreateSkidmanifest::route('/create'),
-            'edit' => Pages\EditSkidmanifest::route('/{record}/edit'),
+            // 'edit' => Pages\EditSkidmanifest::route('/{record}/edit'),
         ];
     }
 }
