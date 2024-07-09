@@ -79,8 +79,8 @@ class SkidmanifestResource extends Resource
             ])
             ->filters([
                 Filter::make('is_checked')
-    ->query(fn (Builder $query): Builder => $query->where('is_checked', false))
-    ->default(false),
+    ->query(fn (Builder $query): Builder => $query->where('is_checked', false))->default(),
+
                 TernaryFilter::make('is_encode')
                 ->label('Encoded')
                 ->placeholder('All')
