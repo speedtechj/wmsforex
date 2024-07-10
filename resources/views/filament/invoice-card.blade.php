@@ -1,3 +1,4 @@
+@filamentStyles
 @vite('resources/css/app.css') 
 <div class="bg-white-900 m-10">
     <div class="px-4 sm:px-0">
