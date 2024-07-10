@@ -1,5 +1,5 @@
-@filamentStyles
-@vite('resources/css/app.css') 
+{{-- @filamentStyles
+@vite('resources/css/app.css')  --}}
 <div class="bg-white-900 m-10">
     <div class="px-4 sm:px-0">
       <h3 class="text-base font-semibold leading-7 text-white-900">Invoice Information</h3>
