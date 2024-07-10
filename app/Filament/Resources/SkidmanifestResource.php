@@ -117,6 +117,14 @@ class SkidmanifestResource extends Resource
                 ->visible(fn (Model $record) => $record->is_encode)
                 ->action(function (Model $record) {
                     $record->update(['is_checked' => true]);
+                }),
+                Tables\Actions\Action::make('Uncheck')
+                ->icon('heroicon-o-x-mark')
+                ->color('danger')
+                ->iconButton()
+                ->visible(fn (Model $record) => $record->is_checked)
+                ->action(function (Model $record) {
+                    $record->update(['is_checked' => false]);
                 })
             ])
             ->bulkActions([
