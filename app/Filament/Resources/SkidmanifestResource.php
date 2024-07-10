@@ -50,7 +50,7 @@ class SkidmanifestResource extends Resource
                     ->label('Invoice')
                     ->trigger('hover')
                     ->placement('bottom') // for more: https://alpinejs.dev/plugins/anchor#positioning
-                        ->icon('heroicon-o-chevron-right') // show custom icon
+                        ->icon('heroicon-o-chevron-down') // show custom icon
                         ->offset(5) // int px, for more: https://alpinejs.dev/plugins/anchor#offset
                         ->popOverMaxWidth('1000')
                         ->content(function (Model $record){
@@ -114,6 +114,7 @@ class SkidmanifestResource extends Resource
                 Tables\Actions\Action::make('Check')
                 ->icon('heroicon-o-check')
                 ->iconButton()
+                ->visible(fn (Model $record) => $record->is_checked)
                 ->action(function (Model $record) {
                     $record->update(['is_checked' => true]);
                 })
