@@ -88,7 +88,9 @@ class SkidmanifestResource extends Resource
                     Tables\Columns\IconColumn::make('is_encode')
                     ->label('Encoded')
                     ->boolean(),
-                    Tables\Columns\ToggleColumn::make('is_checked'),
+                    Tables\Columns\IconColumn::make('is_checked')
+                    ->label('Checked')
+                    ->boolean(),
                     Tables\Columns\TextColumn::make('created_at')->toggleable(isToggledHiddenByDefault: true),
                     Tables\Columns\TextColumn::make('updated_at')->toggleable(isToggledHiddenByDefault: true),
                
@@ -109,7 +111,12 @@ class SkidmanifestResource extends Resource
                 ->default(Batch::currentbatch()),
             ])
             ->actions([
-                // Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('Check')
+                ->icon('heroicon-o-check')
+                ->iconButton()
+                ->action(function (Model $record) {
+                    $record->update(['is_checked' => true]);
+                })
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
