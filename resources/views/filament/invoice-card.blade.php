@@ -30,6 +30,23 @@
         $record->booking->receiveraddress->provincephil->name
      }}</dd>
         </div>
+        @if ($record->booking->payment_balance > 0)
+        <div class="px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-white-900">Payment Balance</dt>
+            <dd class=" text-sm leading-6 text-white-700 sm:col-span-2 ">
+                {{"$".round(floatval($record->booking->payment_balance) / 100, precision:2)}}
+          </div>
+        @endif
+        
+        @isset($record->booking->agent->full_name)
+        <div class="px-2 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium leading-6 text-white-900">Pick-up By</dt>
+            <dd class=" text-sm leading-6 text-white-700 sm:col-span-2 ">{{$record->booking->agent->full_name}}</dd>
+          </div>
+        @endisset
+            
+      
+        
       </dl>
     </div>
   </div>

@@ -36,7 +36,10 @@ class Booking extends Model
     {
         return $this->belongsTo(Receiveraddress::class);
     }
-
+    public function agent()
+    {
+        return $this->belongsTo(Agent::class);
+    }
     public function scopeSkidresult($query, $booking_invoice)
     {
       return $query->where('booking_invoice', $booking_invoice)
