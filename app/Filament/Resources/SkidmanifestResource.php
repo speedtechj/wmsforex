@@ -49,9 +49,10 @@ class SkidmanifestResource extends Resource
                     ->sortable()
                     ->label('Invoice')
                     ->trigger('hover')
-                    ->placement('right') // for more: https://alpinejs.dev/plugins/anchor#positioning
-                        ->offset(2) // int px, for more: https://alpinejs.dev/plugins/anchor#offset
-                        ->popOverMaxWidth('900')
+                    ->placement('bottom') // for more: https://alpinejs.dev/plugins/anchor#positioning
+                        ->icon('heroicon-o-chevron-right') // show custom icon
+                        ->offset(20) // int px, for more: https://alpinejs.dev/plugins/anchor#offset
+                        ->popOverMaxWidth('1000')
                         ->content(function (Model $record){
                             
                             $data_record = Booking::where('id',$record->booking_id)->first();
