@@ -20,7 +20,14 @@ class Booking extends Model
     {
         return $this->belongsTo(Boxtype::class);
     }
-    
+    public function sender()
+    {
+        return $this->belongsTo(Sender::class);
+    }
+    public function senderaddress()
+    {
+        return $this->belongsTo(Senderaddress::class);
+    }
 
     public function scopeSkidresult($query, $booking_invoice)
     {
