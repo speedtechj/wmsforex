@@ -51,7 +51,7 @@ class SkidmanifestResource extends Resource
                     ->trigger('hover')
                     ->placement('bottom') // for more: https://alpinejs.dev/plugins/anchor#positioning
                         ->icon('heroicon-o-chevron-right') // show custom icon
-                        ->offset(20) // int px, for more: https://alpinejs.dev/plugins/anchor#offset
+                        ->offset(5) // int px, for more: https://alpinejs.dev/plugins/anchor#offset
                         ->popOverMaxWidth('1000')
                         ->content(function (Model $record){
                             
