@@ -114,7 +114,7 @@ class SkidmanifestResource extends Resource
                 Tables\Actions\Action::make('Check')
                 ->icon('heroicon-o-check')
                 ->iconButton()
-                ->visible(fn (Model $record) => $record->is_checked)
+                ->visible(fn (Model $record) => !$record->is_checked)
                 ->action(function (Model $record) {
                     $record->update(['is_checked' => true]);
                 })
