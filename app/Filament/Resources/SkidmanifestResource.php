@@ -45,22 +45,18 @@ class SkidmanifestResource extends Resource
                 Tables\Columns\TextColumn::make('skidno')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('booking_id'),
                     \LaraZeus\Popover\Tables\PopoverColumn::make('virtual_invoice')
                     ->label('Invoice')
                     ->trigger('hover')
                     ->placement('right') // for more: https://alpinejs.dev/plugins/anchor#positioning
-                        ->offset(5) // int px, for more: https://alpinejs.dev/plugins/anchor#offset
-                        ->popOverMaxWidth('600')
+                        ->offset(2) // int px, for more: https://alpinejs.dev/plugins/anchor#offset
+                        ->popOverMaxWidth('900')
                         ->content(function (Model $record){
-                            // $data_record = Booking::where('booking_invoice', 	
-                            // '348463')
-                            // ->orWhere('manual_invoice', 	
-                            // '348463')->first();
+                            
                             $data_record = Booking::where('id',$record->booking_id)->first();
-                            // dd($data_record);
+                          
                             if($data_record) {
-                                return  view('filament.invoice-card', ['record' => $record, 'data_record' => $data_record]);
+                                return  view('filament.invoice-card', ['record' => $record]);
                             }else {
                                 return new HtmlString('<div class="p-4">Invoice Not Encoded</div>');
                             }

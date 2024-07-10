@@ -28,6 +28,14 @@ class Booking extends Model
     {
         return $this->belongsTo(Senderaddress::class);
     }
+    public function receiver()
+    {
+        return $this->belongsTo(Receiver::class);
+    }
+    public function receiveraddress()
+    {
+        return $this->belongsTo(Receiveraddress::class);
+    }
 
     public function scopeSkidresult($query, $booking_invoice)
     {
