@@ -46,6 +46,7 @@ class SkidmanifestResource extends Resource
                     ->numeric()
                     ->sortable(),
                     \LaraZeus\Popover\Tables\PopoverColumn::make('virtual_invoice')
+                    ->sortable()
                     ->label('Invoice')
                     ->trigger('hover')
                     ->placement('right') // for more: https://alpinejs.dev/plugins/anchor#positioning
