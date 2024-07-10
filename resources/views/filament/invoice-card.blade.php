@@ -22,10 +22,13 @@
           <dt class="text-sm font-medium leading-6 text-white-900">Address</dt>
           <dd class=" text-sm leading-6 text-white-700 sm:col-span-2 ">{{
           $record->booking->receiveraddress->address.' '. 
-          $record->booking->receiveraddress->barangayphil->name.' '. 
-          $record->booking->receiveraddress->cityphil->name.' '.
-          $record->booking->receiveraddress->provincephil->name
+          $record->booking->receiveraddress->barangayphil->name 
        }}</dd>
+        <dt class="text-sm font-medium leading-6 text-white-900"></dt>
+        <dd class=" text-sm leading-6 text-white-700 sm:col-span-2 ">{{
+        $record->booking->receiveraddress->cityphil->name.' '.
+        $record->booking->receiveraddress->provincephil->name
+     }}</dd>
         </div>
       </dl>
     </div>
