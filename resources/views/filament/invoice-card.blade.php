@@ -1,6 +1,6 @@
 {{-- @filamentStyles
 @vite('resources/css/app.css')  --}}
-<div class="bg-white-900">
+<div class="bg-white-900 w-full">
     <div class="p-4">
       <h3 class="text-base font-semibold leading-7 text-white-900">Invoice Information</h3>
     </div>
