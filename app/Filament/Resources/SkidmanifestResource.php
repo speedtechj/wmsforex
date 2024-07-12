@@ -72,7 +72,7 @@ class SkidmanifestResource extends Resource
                 Tables\Columns\TextColumn::make('batch.batchno')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('boxtype.description')
+                Tables\Columns\TextColumn::make('booking.boxtype.description')
                     ->numeric()
                     ->sortable(),
                     Tables\Columns\IconColumn::make('booking.is_paid')
