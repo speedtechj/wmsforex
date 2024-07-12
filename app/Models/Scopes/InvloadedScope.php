@@ -13,6 +13,6 @@ class InvloadedScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        $builder->whereDate('booking_date', '>=' , now()->subDays(60));
+        $builder->whereDate('booking_date', '>=' , now()->subDays(30));
     }
 }
