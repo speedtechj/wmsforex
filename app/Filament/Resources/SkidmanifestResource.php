@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\Dataall;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Batch;
 use App\Models\Booking;
 use Filament\Forms\Form;
+use App\Models\Bookingall;
 use Filament\Tables\Table;
 use App\Models\Skidmanifest;
 use Filament\Resources\Resource;
@@ -55,8 +57,8 @@ class SkidmanifestResource extends Resource
                         ->popOverMaxWidth('1000')
                         ->content(function (Model $record){
                             
-                            $data_record = Booking::where('id',$record->booking_id)->first();
-                          
+                            $data_record = booking::where('id',$record->booking_id)->first();
+                         
                             if($data_record) {
                                 return  view('filament.invoice-card', ['record' => $record]);
                             }else {
@@ -70,7 +72,7 @@ class SkidmanifestResource extends Resource
                 Tables\Columns\TextColumn::make('batch.batchno')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('booking.boxtype.description')
+                Tables\Columns\TextColumn::make('boxtype.description')
                     ->numeric()
                     ->sortable(),
                     Tables\Columns\IconColumn::make('booking.is_paid')

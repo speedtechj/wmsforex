@@ -15,6 +15,7 @@ class Skidmanifest extends Model
     {
         return $this->belongsTo(Booking::class);
     }
+   
     public function batch() : BelongsTo
     {
         return $this->belongsTo(Batch::class);
@@ -22,5 +23,9 @@ class Skidmanifest extends Model
     public function user() : BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+    public function boxtype() : BelongsTo
+    {
+        return $this->belongsTo(Boxtype::class);
     }
 }
