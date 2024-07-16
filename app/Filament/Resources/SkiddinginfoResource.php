@@ -52,7 +52,7 @@ class SkiddinginfoResource extends Resource
     {
         return $table
             ->deferLoading()
-            ->paginationPageOptions([10, 25, 'all'])
+            ->paginationPageOptions([10, 25, 50, 100, 200, 400, 500])
             ->groups([
 
                 Group::make('skidno')
