@@ -79,7 +79,7 @@ class SkiddinginfoResource extends Resource
                     ->label('Skid Number')
                     ->searchable(isIndividual: true)
                     ->sortable(),
-                Tables\Columns\TextColumn::make('booking.boxtype.description')
+                Tables\Columns\TextColumn::make('boxtype.description')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('virtual_invoice')
