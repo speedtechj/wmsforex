@@ -17,7 +17,10 @@ class Skiddinginfo extends Model
         return $this->belongsTo(Booking::class);
     }
     
-    
+    public function bookingdata() : BelongsTo
+    {
+        return $this->belongsTo(Bookdata::class);
+    }
     public function batch() : BelongsTo
     {
         return $this->belongsTo(Batch::class);

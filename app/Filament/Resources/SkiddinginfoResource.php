@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\Bookdata;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Batch;
@@ -128,7 +129,9 @@ class SkiddinginfoResource extends Resource
                         ->color('primary')
                         ->requiresConfirmation()
                         ->action(function (Model $record, Get $get, array $data) {
-                            $record->update(['batch_id' => 23]);
+                          $booking_data = Bookdata::where('booking_invoice', $record->virtual_invoice)->orWhere('manual_invoice', $record->virtual_invoice)->first();
+                       
+                          $booking_data->update(['batch_id' => 23]);
                             $record->delete();
                         }),
                     Tables\Actions\Action::make('Move')
