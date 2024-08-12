@@ -71,7 +71,7 @@ class SkidweightResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ])->defaultSort('skid_no', 'asc')
             ->filters([
                 SelectFilter::make('batch_id')
                     ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
