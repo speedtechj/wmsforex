@@ -65,6 +65,7 @@ class Scaninvoice extends Page implements HasForms, HasTable
                             ->length(7)
                             ->numeric()
                             // ->live()
+                            ->autocomplete(false)
                             ->label('Scan Invoice')
                             ->placeholder('Scan Invoice')
                             ->autofocus()
@@ -239,6 +240,9 @@ class Scaninvoice extends Page implements HasForms, HasTable
                 ->prefixIcon('heroicon-o-scale')
                 ->prefixIconColor('success')
                 ->suffix('Lbs')
+                ->autocomplete(false)
+                ->minValue(1)
+                ->maxValue(2500)
                 ->required()
 
         ];

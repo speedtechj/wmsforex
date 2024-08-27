@@ -85,7 +85,6 @@ class SkidmanifestResource extends Resource
                         $compresult = Booking::where(['id' => $record->booking_id,'batch_id' => $record->batch_id])
                         ->exists();
                        return $compresult;
-                       
                     }),
                     Tables\Columns\IconColumn::make('is_encode')
                     ->label('Encoded')
