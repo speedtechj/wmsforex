@@ -37,7 +37,7 @@ class SkiddinginfosExport implements ShouldAutoSize, FromQuery, WithMapping, Wit
             $skiddinginfo->batch->batchno,
             $skiddinginfo->skidno,
             $skiddinginfo->virtual_invoice ?? '',
-            $skiddinginfo->booking->boxtype->description ?? '',
+            $skiddinginfo->boxtype->description ?? '',
             $skiddinginfo->cbm,
             $skiddinginfo->is_encode ? 'Ok' : '',
             

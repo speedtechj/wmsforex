@@ -14,6 +14,7 @@ use Filament\Pages\Page;
 use App\Models\Skidweight;
 use Filament\Tables\Table;
 use App\Models\Skiddinginfo;
+use App\Models\Skidgallery;
 use Filament\Support\Enums\MaxWidth;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\Layout\Grid;
+use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Columns\Layout\Panel;
 use Filament\Tables\Columns\Layout\Split;
@@ -104,17 +106,24 @@ class Scaninvoice extends Page implements HasForms, HasTable
                                         $skidwtresult = Skidweight::where('skid_no', $this->skidno)
                                         ->where('batch_id', Batch::currentbatch())->count();
                                        
-                                      
+                                       
                                         if($skidwtresult == 0){
                                             Skidcnt::get()->first()->update([
                                                 'skid_count' => $this->skidno + 1
                                             ]);
+                                           
                                             Skidweight::create([
                                                 'skid_no' => $this->skidno,
                                                 'weight' => $data['weight'],
                                                 'batch_id' => Batch::Currentbatch(),
-                                                'user_id' => auth()->user()->id,
+                                                'user_id' => \Illuminate\Support\Facades\Auth::user()->id,
                                             ]);
+                                            // Skidgallery::create([
+                                            //     'skidid' => $this->skidno,
+                                            //     'gallery' => $data['attachment'],
+                                            //     'batch_id' => Batch::Currentbatch(),
+                                            //     'user_id' => \Illuminate\Support\Facades\Auth::user()->id,
+                                            // ]);
                                             Notification::make()
                                                 ->title('Weight Saved successfully & New skidno created') 
                                                 ->success()
@@ -156,9 +165,10 @@ class Scaninvoice extends Page implements HasForms, HasTable
                 'booking_id' => $skidresult->id ?? null,
                 'virtual_invoice' => $this->data['booking_invoice'],
                 'batch_id' => Batch::Currentbatch(),
-                'user_id' => auth()->user()->id,
+                'user_id' => \Illuminate\Support\Facades\Auth::user()->id,
                 'is_encode' => $encode ?? false,
             ]);
+           
             Notification::make()
                 ->title('Invoice Scan successfully')
                 ->success()
@@ -232,6 +242,17 @@ class Scaninvoice extends Page implements HasForms, HasTable
     public static function getWeighform(): array
     {
         return [
+            // FileUpload::make('attachment')
+            //     ->label('Attachment')
+            //     ->multiple()
+            //     ->panelLayout('grid')
+            //     ->uploadingMessage('Uploading attachment...')
+            //     ->image()
+            //     ->disk('public')
+            //     ->directory('skidgallery')
+            //     ->visibility('private')
+            //     ->required()
+            //     ->minFiles(4),
             TextInput::make('weight')
                 ->numeric()
                 ->label('Weight')
@@ -243,7 +264,9 @@ class Scaninvoice extends Page implements HasForms, HasTable
                 ->autocomplete(false)
                 ->minValue(1)
                 ->maxValue(2500)
-                ->required()
+                ->required(),
+                
+               
 
         ];
     }

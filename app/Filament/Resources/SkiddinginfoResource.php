@@ -65,7 +65,7 @@ class SkiddinginfoResource extends Resource
             ])
             ->defaultGroup('skidno')
             ->defaultPaginationPageOption(5)
-            ->paginated([5, 10, 25, 50, 100,200,400])
+            ->paginated([5, 10, 25])
             // ->modifyQueryUsing(function ($query) {
             //     return $query->with(['booking','user']);
             // })
@@ -78,9 +78,12 @@ class SkiddinginfoResource extends Resource
                     ->label('Skid Number')
                     ->searchable(isIndividual: true)
                     ->sortable(),
-                Tables\Columns\TextColumn::make('booking.boxtype.description')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('boxtype')
+                    ->label('Box Type')
+                    ->sortable()
+                    ->formatStateUsing(function (Model $record) {
+                        return $record->boxtype->description;
+                    }),
                 Tables\Columns\TextColumn::make('virtual_invoice')
                     ->label('Invoice')
                     ->sortable()

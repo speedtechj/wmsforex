@@ -26,6 +26,8 @@ use App\Filament\Resources\SkidmanifestResource\RelationManagers;
 class SkidmanifestResource extends Resource
 {
     protected static ?string $model = Skidmanifest::class;
+    protected static ?string $navigationLabel = 'Skid VS Manifest';
+    public static ?string $label = 'Skid VS Manifest';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

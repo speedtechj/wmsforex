@@ -20,7 +20,8 @@ use App\Filament\Resources\ManifestskidResource\RelationManagers;
 class ManifestskidResource extends Resource
 {
     protected static ?string $model = Manifestskid::class;
-
+    protected static ?string $navigationLabel = 'Manifest VS Skid';
+    public static ?string $label = 'Manifest VS Skid';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -64,11 +65,11 @@ class ManifestskidResource extends Resource
                 ->default(Batch::currentbatch()),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

@@ -26,8 +26,10 @@ use App\Filament\Resources\SkidsummaryResource\RelationManagers;
 class SkidsummaryResource extends Resource
 {
     protected static ?string $model = Skidsummary::class;
+    protected static ?string $navigationLabel = 'Skidding Summary';
+    public static ?string $label = 'Skidding Sumarries';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
     public static function form(Form $form): Form
     {
