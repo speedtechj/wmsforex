@@ -2,9 +2,10 @@
 
 namespace App\Models\Scopes;
 
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Settingdate;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
+use Illuminate\Database\Eloquent\Builder;
 
 class InvloadedScope implements Scope
 {
@@ -13,6 +14,7 @@ class InvloadedScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        $builder->whereDate('booking_date', '>=' , now()->subDays(30));
+        $days = Settingdate::where('is_default', 1)->first()->setting_day ?? 30;
+        $builder->whereDate('booking_date', '>=' , now()->subDays($days));
     }
 }

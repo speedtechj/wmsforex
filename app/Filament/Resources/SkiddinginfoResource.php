@@ -78,12 +78,14 @@ class SkiddinginfoResource extends Resource
                     ->label('Skid Number')
                     ->searchable(isIndividual: true)
                     ->sortable(),
-                Tables\Columns\TextColumn::make('boxtype')
-                    ->label('Box Type')
-                    ->sortable()
-                    ->formatStateUsing(function (Model $record) {
-                        return $record->boxtype->description;
-                    }),
+                    Tables\Columns\TextColumn::make('booking.boxtype.description')
+                    ->sortable(),
+                // Tables\Columns\TextColumn::make('boxtype')
+                //     ->label('Box Type')
+                //     ->sortable()
+                //     ->formatStateUsing(function (Model $record) {
+                //         return $record->boxtype->description;
+                //     }),
                 Tables\Columns\TextColumn::make('virtual_invoice')
                     ->label('Invoice')
                     ->sortable()
