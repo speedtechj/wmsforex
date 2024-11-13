@@ -66,11 +66,11 @@ class SkidgalleryResource extends Resource
                     ->formatStateUsing(function ( $record) {
                         return $record->batch->batchno.' - '.$record->batch->batch_year;
                     }),
-                Tables\Columns\ImageColumn::make('gallery')
-                    ->circular()
-                    ->stacked()
-                    ->ring(8)
-                    ->overlap(0),
+                // Tables\Columns\ImageColumn::make('gallery')
+                //     ->circular()
+                //     ->stacked()
+                //     ->ring(8)
+                //     ->overlap(0),
                     Tables\Columns\TextColumn::make('user.full_name')
                     ->label('Created By')
                     ->sortable(),
