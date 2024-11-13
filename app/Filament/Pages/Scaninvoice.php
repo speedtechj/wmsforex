@@ -118,12 +118,12 @@ class Scaninvoice extends Page implements HasForms, HasTable
                                                 'batch_id' => Batch::Currentbatch(),
                                                 'user_id' => \Illuminate\Support\Facades\Auth::user()->id,
                                             ]);
-                                            // Skidgallery::create([
-                                            //     'skidid' => $this->skidno,
-                                            //     'gallery' => $data['attachment'],
-                                            //     'batch_id' => Batch::Currentbatch(),
-                                            //     'user_id' => \Illuminate\Support\Facades\Auth::user()->id,
-                                            // ]);
+                                            Skidgallery::create([
+                                                'skidid' => $this->skidno,
+                                                'gallery' => $data['attachment'],
+                                                'batch_id' => Batch::Currentbatch(),
+                                                'user_id' => \Illuminate\Support\Facades\Auth::user()->id,
+                                            ]);
                                             Notification::make()
                                                 ->title('Weight Saved successfully & New skidno created') 
                                                 ->success()
@@ -242,17 +242,17 @@ class Scaninvoice extends Page implements HasForms, HasTable
     public static function getWeighform(): array
     {
         return [
-            // FileUpload::make('attachment')
-            //     ->label('Attachment')
-            //     ->multiple()
-            //     ->panelLayout('grid')
-            //     ->uploadingMessage('Uploading attachment...')
-            //     ->image()
-            //     ->disk('public')
-            //     ->directory('skidgallery')
-            //     ->visibility('private')
-            //     ->required()
-            //     ->minFiles(4),
+            FileUpload::make('attachment')
+                ->label('Attachment')
+                ->multiple()
+                ->panelLayout('grid')
+                ->uploadingMessage('Uploading attachment...')
+                ->image()
+                ->disk('public')
+                ->directory('skidgallery')
+                ->visibility('private')
+                ->required()
+                ->minFiles(4),
             TextInput::make('weight')
                 ->numeric()
                 ->label('Weight')
