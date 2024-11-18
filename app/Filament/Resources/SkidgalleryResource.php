@@ -43,6 +43,7 @@ class SkidgalleryResource extends Resource
                             ->directory('skidgallery')
                             ->visibility('private')
                             ->required()
+                            ->removeUploadedFileButtonPosition('right')
                             ->minFiles(4),
                     ])
 
