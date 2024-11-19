@@ -5,16 +5,20 @@ namespace App\Filament\Resources;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\Batch;
+use Filament\Forms\Get;
 use Filament\Forms\Form;
 use App\Models\Skidweight;
 use Filament\Tables\Table;
+use App\Models\Skidgallery;
 use App\Models\Skiddinginfo;
 use Filament\Resources\Resource;
 use App\Exports\SkidweightsExport;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Notifications\Notification;
+use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Exports\SkidweightExporter;
@@ -88,8 +92,8 @@ class SkidweightResource extends Resource
                                 Select::make('batch_id')
                                     ->label('Select Batch')
                                     ->options(Batch::query()->where('is_lock', false)
-                                    ->where('id', '!=', Batch::Currentbatch())
-                                    ->pluck('batchno', 'id'))
+                                        ->where('id', '!=', Batch::Currentbatch())
+                                        ->pluck('batchno', 'id'))
                                     ->searchable()
                             ])
 
@@ -114,15 +118,61 @@ class SkidweightResource extends Resource
 
             ])
             ->actions([
-                Tables\Actions\DeleteAction::make()
-                    ->requiresConfirmation()
-                    ->visible(function (Model $record) {
-                        $skidcount = Skiddinginfo::query()->where('skidno', $record->skid_no)
-                            ->where('batch_id', $record->batch_id)->count();
-                        if(!$skidcount){
-                            return true;
-                        }
-                    }),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\Action::make('Take Picture')
+                        ->visible(function (Model $record) {
+                            $skidcount = Skidgallery::query()->where('skidid', $record->skid_no)
+                                ->where('batch_id', $record->batch_id)->count();
+                            if (!$skidcount) {
+                                return true;
+                            }
+
+                        })
+                        ->icon('heroicon-o-camera')
+                        ->color('primary')
+                        ->slideOver()
+                        ->modalWidth(MaxWidth::Large)
+                        ->icon('heroicon-o-arrow-right-start-on-rectangle')
+                        ->color('info')
+                        ->form([
+                            FileUpload::make('attachment')
+                                ->label('Attachment')
+                                ->multiple()
+                                ->panelLayout('grid')
+                                ->uploadingMessage('Uploading attachment...')
+                                ->image()
+                                ->disk('public')
+                                ->directory('skidgallery')
+                                ->visibility('private')
+                                ->required()
+                                ->minFiles(4),
+                        ])
+                        ->action(function (Model $record, Get $get, array $data) {
+
+                            Skidgallery::create([
+                                'batch_id' => $record->batch_id,
+                                'skidid' => $record->skid_no,
+                                'gallery' => $data['attachment'],
+                                'user_id' => \Illuminate\Support\Facades\Auth::user()->id,
+                            ]);
+
+                            Notification::make()
+                                ->title('Saved successfully')
+                                ->icon('heroicon-o-document-text')
+                                ->iconColor('success')
+                                ->send();
+
+                        }),
+                    Tables\Actions\DeleteAction::make()
+                        ->requiresConfirmation()
+                        ->visible(function (Model $record) {
+                            $skidcount = Skiddinginfo::query()->where('skidno', $record->skid_no)
+                                ->where('batch_id', $record->batch_id)->count();
+                            if (!$skidcount) {
+                                return true;
+                            }
+                        }),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
