@@ -67,7 +67,7 @@ class BatchResource extends Resource
                     }
                     
                 })
-                ->label('Ope Batch'),
+                ->label('Open Batch'),
                 Tables\Columns\TextColumn::make('user.full_name')
                     ->label('Created By')
                     ->sortable(),
