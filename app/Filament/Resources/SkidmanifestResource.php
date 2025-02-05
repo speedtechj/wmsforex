@@ -102,8 +102,7 @@ class SkidmanifestResource extends Resource
             ->filters([
                 Filter::make('is_checked')
                 ->label('Not Checked')
-    ->query(fn (Builder $query): Builder => $query->where('is_checked', false))->default(),
-
+                 ->query(fn (Builder $query): Builder => $query->where('is_checked', false))->default(),
                 TernaryFilter::make('is_encode')
                 ->label('Encoded')
                 ->placeholder('All')
@@ -112,6 +111,7 @@ class SkidmanifestResource extends Resource
                 SelectFilter::make('batch_id')
                 ->options(Batch::query()->where('is_lock', false)->pluck('batchno', 'id'))
                 ->default(Batch::currentbatch()),
+                
             ])
             ->actions([
                 Tables\Actions\Action::make('Check')

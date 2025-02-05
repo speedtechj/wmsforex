@@ -28,4 +28,5 @@ class Skidmanifest extends Model
     {
         return $this->belongsTo(Boxtype::class);
     }
+   
 }

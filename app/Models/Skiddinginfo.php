@@ -34,6 +34,8 @@ class Skiddinginfo extends Model
         return $this->belongsTo(Boxtype::class);
     }
 
+    
+
     public function scopeSearchskid($query, $booking_invoice)
     {
        $query->where('virtual_invoice', $booking_invoice);
