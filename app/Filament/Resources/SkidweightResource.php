@@ -102,12 +102,25 @@ class SkidweightResource extends Resource
 
                         $last_skid = Skidweight::where('batch_id', $data['batch_id'])->latest()->first();
 
-                        Skidweight::create([
+
+                        if ($last_skid) {
+                           Skidweight::create([
                             'batch_id' => $data['batch_id'],
                             'skid_no' => $last_skid->skid_no + 1,
                             'weight' => 0,
                             'user_id' => auth()->id(),
                         ]);
+                        }else {
+                           Skidweight::create([
+                                'batch_id' => $data['batch_id'],
+                                'skid_no' => 1,
+                                'weight' => 0,
+                                'user_id' => auth()->id(),
+                                ]);
+                        }
+
+
+                        
 
                         Notification::make()
                             ->title('Saved successfully')
