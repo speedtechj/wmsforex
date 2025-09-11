@@ -151,11 +151,16 @@ class Scaninvoice extends Page implements HasForms, HasTable
         $skidresult = Booking::Skidresult($this->data['booking_invoice'])->first();
         $searchskid = Skiddinginfo::Searchskid($this->data['booking_invoice'])->get()->first();
         $bookdata = Booking::Skidresult($this->data['booking_invoice'])->exists();
-      
+     
             if($bookdata){
+                if($skidresult->batch->batchno == '00'){
+                    //  dd($bookdata, $skidresult->batch);
                 $skidresult->update([
                     'batch_id' => Batch::Currentbatch(),
                 ]);
+                }
+
+                // dd('encode already');
                 $encode = true;
                
             };

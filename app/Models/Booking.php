@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-#[ScopedBy([InvloadedScope::class])]
+//#[ScopedBy([InvloadedScope::class])]
 class Booking extends Model
 {
     use SoftDeletes;
@@ -32,6 +32,11 @@ class Booking extends Model
     public function receiver()
     {
         return $this->belongsTo(Receiver::class);
+    }
+
+    public function batch ()
+    {
+        return $this->belongsTo(Batch::class);
     }
     public function receiveraddress()
     {
