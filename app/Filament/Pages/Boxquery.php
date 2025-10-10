@@ -41,8 +41,11 @@ class Boxquery extends Page implements HasForms, HasTable
         return $form
             ->schema([
                 TextInput::make('box_query')
+                ->autocomplete(false)
+                ->length(7)
                 ->autofocus()
-                    ->required(),
+                ->live()
+                ->required(),
             ])
            ->statePath('data');
     }
