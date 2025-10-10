@@ -46,6 +46,11 @@ class Booking extends Model
     {
         return $this->belongsTo(Agent::class);
     }
+
+    public function skiddinginfo(): BelongsTo
+    {
+        return $this->belongsTo(Skiddinginfo::class);
+    }
    
     public function scopeSkidresult($query, $booking_invoice)
     {
