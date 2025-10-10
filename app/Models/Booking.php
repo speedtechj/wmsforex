@@ -63,7 +63,7 @@ class Booking extends Model
     {
         $date = now()->subWeeks(2);
 
-        dd($date);
+     //   dd($date);
         return $query->where('created_at', '>', $date);
     }
    
