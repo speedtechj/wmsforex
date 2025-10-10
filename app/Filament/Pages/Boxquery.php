@@ -14,6 +14,7 @@ use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Notifications\Notification;
 use Filament\Tables\Concerns\InteractsWithTable;
 
 class Boxquery extends Page implements HasForms, HasTable
@@ -32,7 +33,7 @@ class Boxquery extends Page implements HasForms, HasTable
     public $searchid = '';
     public function mount(): void
     {
-       $this->form->fill();
+    //   $this->form->fill();
        
     }
     
@@ -56,12 +57,13 @@ class Boxquery extends Page implements HasForms, HasTable
       // dd($this->data['box_query']);
      $this->box_query = $this->data['box_query'];
     $this->searchid = Booking::where('booking_invoice', $this->box_query)->orWhere('manual_invoice',$this->box_query)->first()->sender_id ?? " ";
-        // dd($this->searchid->sender_id);
-    }
+    
+     $this->data['box_query'] = " ";
+}
     public function table(Table $table): Table
     {
         return $table
-           ->query(Booking::query()->where('sender_id', $this->searchid))
+           ->query(Booking::query()->Within2weeks()->where('sender_id', $this->searchid))
             ->columns([
                 TextColumn::make('invoice')->label('Invoice')
                 ->getStateUsing(function (Model $record){
@@ -71,13 +73,14 @@ class Boxquery extends Page implements HasForms, HasTable
                         return $record->booking_invoice;
                     }
                 }),
-                TextColumn::make('sender.full_name')->label('Sender'),
-                TextColumn::make('boxtype.description')->label('Boxtype'),
-                TextColumn::make('batchno')
+                 TextColumn::make('batchno')
                 ->label('Batch No')
                ->getStateUsing(function (Booking $record) {
                    return $record->batch ? $record->batch->batchno .'-'. $record->batch->batch_year : 'N/A';
                }),
+                TextColumn::make('sender.full_name')->label('Sender'),
+                TextColumn::make('boxtype.description')->label('Boxtype'),
+               
                TextColumn::make('skidno')->label('Skid No.')
                ->getStateUsing(function (Booking $record) {
                 $skidno = Skiddinginfo::where('booking_id', $record->id)->first();
