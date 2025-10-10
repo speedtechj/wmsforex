@@ -48,7 +48,7 @@ class Boxquery extends Page implements HasForms, HasTable
                 ->autofocus()
                  ->prefixIcon('heroicon-o-qr-code')
                 ->prefixIconColor('success')
-              //  ->live()
+                ->live()
                 ->required(),
             ])
            ->statePath('data');
