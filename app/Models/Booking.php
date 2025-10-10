@@ -62,7 +62,9 @@ class Booking extends Model
     public function scopeWithin2weeks($query)
     {
         $date = now()->subWeeks(2);
-        return $query->where('created_at', '>=', $date);
+
+        dd($date);
+        return $query->where('created_at', '>', $date);
     }
    
 }
