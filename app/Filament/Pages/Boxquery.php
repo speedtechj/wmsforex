@@ -43,8 +43,6 @@ class Boxquery extends Page implements HasForms, HasTable
             ->schema([
                 TextInput::make('box_query')
                 ->autocomplete(false)
-                ->minLength(6)
-                ->maxLength(7)
                 ->autofocus()
                 ->live()
                 ->required(),
