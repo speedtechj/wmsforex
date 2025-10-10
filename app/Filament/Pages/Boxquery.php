@@ -62,6 +62,8 @@ class Boxquery extends Page implements HasForms, HasTable
     
      $this->data['box_query'] = " ";
         $this->form->fill();
+
+       
 }
     public function table(Table $table): Table
     {
