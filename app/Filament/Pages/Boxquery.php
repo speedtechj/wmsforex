@@ -49,9 +49,9 @@ class Boxquery extends Page implements HasForms, HasTable
                  ->prefixIcon('heroicon-o-qr-code')
                 ->prefixIconColor('success')
                 ->required()
-                ->extraInputAttributes([
-                    'wire:keydown.enter' => 'search',
-                ]),
+                // ->extraInputAttributes([
+                //     'wire:keydown.enter' => 'search',
+                // ]),
             ])
            ->statePath('data');
     }
