@@ -57,6 +57,7 @@ class Boxquery extends Page implements HasForms, HasTable
     $this->searchid = Booking::where('booking_invoice', $this->box_query)->orWhere('manual_invoice',$this->box_query)->first()->sender_id ?? " ";
     
      $this->data['box_query'] = " ";
+        $this->form->fill();
 }
     public function table(Table $table): Table
     {
