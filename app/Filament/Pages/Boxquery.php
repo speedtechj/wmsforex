@@ -46,12 +46,13 @@ class Boxquery extends Page implements HasForms, HasTable
                 ->minLength(6)
                 ->maxLength(7)
                 ->autofocus()
+                ->live()
                  ->prefixIcon('heroicon-o-qr-code')
                 ->prefixIconColor('success')
                 ->required()
-                // ->extraInputAttributes([
-                //     'wire:keydown.enter' => 'search',
-                // ]),
+                ->extraInputAttributes([
+                    'wire:keydown.enter' => 'search',
+                ]),
             ])
            ->statePath('data');
     }
