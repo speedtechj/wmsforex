@@ -33,7 +33,7 @@ class Boxquery extends Page implements HasForms, HasTable
     public $searchid = '';
     public function mount(): void
     {
-    //   $this->form->fill();
+    $this->form->fill();
        
     }
     
@@ -48,8 +48,10 @@ class Boxquery extends Page implements HasForms, HasTable
                 ->autofocus()
                  ->prefixIcon('heroicon-o-qr-code')
                 ->prefixIconColor('success')
-                ->live()
-                ->required(),
+                ->required()
+                ->extraInputAttributes([
+                    'wire:keydown.enter' => 'search',
+                ]),
             ])
            ->statePath('data');
     }
