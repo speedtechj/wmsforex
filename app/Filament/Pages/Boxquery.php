@@ -43,9 +43,9 @@ class Boxquery extends Page implements HasForms, HasTable
             ->schema([
                 TextInput::make('box_query')
                 ->autocomplete(false)
+                ->autofocus()
                 ->minLength(6)
                 ->maxLength(7)
-                ->autofocus()
                 ->live()
                  ->prefixIcon('heroicon-o-qr-code')
                 ->prefixIconColor('success')
@@ -57,7 +57,7 @@ class Boxquery extends Page implements HasForms, HasTable
 
     public function search(): void
     {
-      // dd($this->data['box_query']);
+      
      $this->box_query = $this->data['box_query'];
     $this->searchid = Booking::where('booking_invoice', $this->box_query)->orWhere('manual_invoice',$this->box_query)->first()->sender_id ?? " ";
     
