@@ -1,9 +1,9 @@
 <x-filament-panels::page>
 
- <x-filament-panels::form wire:keydown.enter="search">
+ <x-filament-panels::form wire:submit="search">
    
    
-        {{ $this->form }}
+      {{ $this->form }}
     </x-filament-panels::form>
     
    

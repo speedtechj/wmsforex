@@ -20,7 +20,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 class Boxquery extends Page implements HasForms, HasTable
 {
     
-    use InteractsWithForms;
+   
     protected static ?string $navigationIcon = 'heroicon-o-qr-code';
     protected static ?string $navigationLabel = 'Scan Boxquery';
     public static ?string $label = 'Scan Box Info';
@@ -57,7 +57,7 @@ class Boxquery extends Page implements HasForms, HasTable
 
     public function search(): void
     {
-      
+     // dd($this->data['box_query']);
      $this->box_query = $this->data['box_query'];
     $this->searchid = Booking::where('booking_invoice', $this->box_query)->orWhere('manual_invoice',$this->box_query)->first()->sender_id ?? " ";
     
