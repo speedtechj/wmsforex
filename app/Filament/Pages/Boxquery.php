@@ -13,8 +13,9 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Notifications\Notification;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 
 class Boxquery extends Page implements HasForms, HasTable
@@ -46,10 +47,11 @@ class Boxquery extends Page implements HasForms, HasTable
                 ->autofocus()
                 ->minLength(6)
                 ->maxLength(7)
-                ->live()
+               //->live()
                  ->prefixIcon('heroicon-o-qr-code')
                 ->prefixIconColor('success')
                 ->required()
+                ->extraAttributes(['wire:keydown.enter.prevent' => 'search'])
                
             ])
            ->statePath('data');
@@ -57,19 +59,32 @@ class Boxquery extends Page implements HasForms, HasTable
 
     public function search(): void
     {
-     // dd($this->data['box_query']);
-     $this->box_query = $this->data['box_query'];
-    $this->searchid = Booking::where('booking_invoice', $this->box_query)->orWhere('manual_invoice',$this->box_query)->first()->sender_id ?? " ";
-    
-     $this->data['box_query'] = " ";
-        $this->form->fill();
+        $this->validate();
+    $this->searchid = Booking::where('booking_invoice', trim($this->data['box_query']))->orWhere('manual_invoice',trim($this->data['box_query']))->first()->sender_id ?? '';
+        if($this->searchid == ''){
+            Notification::make()
+            ->title('No Record Found')
+            ->warning()
+            ->send();
+            return;
+        }
+       // dd( $this->searchid);
+    $this->data['box_query'] = " ";
+   $this->form->fill();
 
        
 }
     public function table(Table $table): Table
     {
         return $table
-           ->query(Booking::query()->Within2weeks()->where('sender_id', $this->searchid))
+          // ->query(Booking::query()->Within2weeks()->where('sender_id', $this->searchid))
+       // ->query(Booking::query()->where('sender_id', trim($this->searchid)))
+      ->query(function (Builder $query ){
+    return Booking::query()->where('sender_id', trim($this->searchid));
+      
+       // Booking::$query()->where('sender_id', trim($this->searchid));
+         // dd($query->get());
+      })
             ->columns([
                 TextColumn::make('invoice')->label('Invoice')
                 ->getStateUsing(function (Model $record){
@@ -103,5 +118,14 @@ class Boxquery extends Page implements HasForms, HasTable
                 // ...
             ]);
     }
+
+//    protected function getTableQuery(): Builder
+//     {
+//         $query = Booking::query();
+//         dd($query->get());
+//         // return parent::getTableQuery()
+//         //     ->where('status', 'published') // Filter for published posts
+//         //     ->with('author'); // Eager load the author relationship
+//     }
     
 }
