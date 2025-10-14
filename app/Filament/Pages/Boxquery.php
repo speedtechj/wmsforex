@@ -66,7 +66,9 @@ class Boxquery extends Page implements HasForms, HasTable
             ->title('No Record Found')
             ->warning()
             ->send();
-            return;
+             $this->data['box_query'] = " ";
+           $this->resetTable();
+              $this->form->fill();
         }
        // dd( $this->searchid);
     $this->data['box_query'] = " ";
