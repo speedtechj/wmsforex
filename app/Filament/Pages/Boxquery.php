@@ -77,14 +77,14 @@ class Boxquery extends Page implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-          // ->query(Booking::query()->Within2weeks()->where('sender_id', $this->searchid))
+          ->query(Booking::query()->Within2weeks()->where('sender_id', trim($this->searchid)))
        // ->query(Booking::query()->where('sender_id', trim($this->searchid)))
-      ->query(function (Builder $query ){
-    return Booking::query()->where('sender_id', trim($this->searchid));
+   //   ->query(function (Builder $query ){
+  //  return Booking::query()->where('sender_id', trim($this->searchid));
       
        // Booking::$query()->where('sender_id', trim($this->searchid));
          // dd($query->get());
-      })
+   //   })
             ->columns([
                 TextColumn::make('invoice')->label('Invoice')
                 ->getStateUsing(function (Model $record){
