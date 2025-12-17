@@ -1,14 +1,13 @@
 <x-filament-panels::page>
 
- <x-filament-panels::form wire:submit.prevent="search">
-   
-   
-      {{ $this->form }}
-    </x-filament-panels::form>
-    
-   
-    
-    <div>{{ $this->table }}</div>
+<form wire:submit.prevent="search"  >
+        {{ $this->form }}
+    </form>
+  
+   <div>
+        {{ $this->table }}
+    </div>
 
-     
+    
 </x-filament-panels::page>
+

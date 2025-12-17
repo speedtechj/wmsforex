@@ -47,7 +47,7 @@ class Boxquery extends Page implements HasForms, HasTable
                 ->autofocus()
                 ->minLength(6)
                 ->maxLength(7)
-               //->live()
+                ->live()
                  ->prefixIcon('heroicon-o-qr-code')
                 ->prefixIconColor('success')
                 ->required()
@@ -59,8 +59,11 @@ class Boxquery extends Page implements HasForms, HasTable
 
     public function search(): void
     {
+
         $this->validate();
     $this->searchid = Booking::where('booking_invoice', trim($this->data['box_query']))->orWhere('manual_invoice',trim($this->data['box_query']))->first()->sender_id ?? '';
+
+   
         if($this->searchid == ''){
             Notification::make()
             ->title('No Record Found')
@@ -71,24 +74,23 @@ class Boxquery extends Page implements HasForms, HasTable
               $this->form->fill();
         }
        // dd( $this->searchid);
-    $this->data['box_query'] = " ";
+   // $this->data['box_query'] = " ";
    $this->form->fill();
 
        
 }
-    public function table(Table $table): Table
+
+    protected function getTableQuery(): Builder
     {
-        return $table
-          ->query(Booking::query()->Within2weeks()->where('sender_id', trim($this->searchid)))
-       // ->query(Booking::query()->where('sender_id', trim($this->searchid)))
-   //   ->query(function (Builder $query ){
-  //  return Booking::query()->where('sender_id', trim($this->searchid));
-      
-       // Booking::$query()->where('sender_id', trim($this->searchid));
-         // dd($query->get());
-   //   })
-            ->columns([
-                TextColumn::make('invoice')->label('Invoice')
+      //  dd(Booking::query()->where('sender_id', trim($this->searchid)));
+     // return Booking::query()->where('sender_id', $this->searchid);
+        return Booking::query()->Within2weeks()->where('sender_id', trim($this->searchid));
+    }
+
+    protected function getTableColumns(): array
+    {
+        return [
+            TextColumn::make('invoice')->label('Invoice')
                 ->getStateUsing(function (Model $record){
                     if($record->manual_invoice != null){
                         return $record->manual_invoice;
@@ -109,17 +111,54 @@ class Boxquery extends Page implements HasForms, HasTable
                 $skidno = Skiddinginfo::where('booking_id', $record->id)->first();
                 return $skidno ? $skidno->skidno : 'N/A';
                }),
-            ])->defaultSort('created_at','desc')
-            ->filters([
-                // ...
-            ])
-            ->actions([
-                // ...
-            ])
-            ->bulkActions([
-                // ...
-            ]);
+        ];
     }
+
+
+//     public function table(Table $table): Table
+//     {
+//         return $table
+//           ->query(Booking::query()->Within2weeks()->where('sender_id', trim($this->searchid)))
+//        // ->query(Booking::query()->where('sender_id', trim($this->searchid)))
+//    //   ->query(function (Builder $query ){
+//   //  return Booking::query()->where('sender_id', trim($this->searchid));
+      
+//        // Booking::$query()->where('sender_id', trim($this->searchid));
+//          // dd($query->get());
+//    //   })
+//             ->columns([
+//                 TextColumn::make('invoice')->label('Invoice')
+//                 ->getStateUsing(function (Model $record){
+//                     if($record->manual_invoice != null){
+//                         return $record->manual_invoice;
+//                     }else{
+//                         return $record->booking_invoice;
+//                     }
+//                 }),
+//                  TextColumn::make('batchno')
+//                 ->label('Batch No')
+//                ->getStateUsing(function (Booking $record) {
+//                    return $record->batch ? $record->batch->batchno .'-'. $record->batch->batch_year : 'N/A';
+//                }),
+//                 TextColumn::make('sender.full_name')->label('Sender'),
+//                 TextColumn::make('boxtype.description')->label('Boxtype'),
+               
+//                TextColumn::make('skidno')->label('Skid No.')
+//                ->getStateUsing(function (Booking $record) {
+//                 $skidno = Skiddinginfo::where('booking_id', $record->id)->first();
+//                 return $skidno ? $skidno->skidno : 'N/A';
+//                }),
+//             ])->defaultSort('created_at','desc')
+//             ->filters([
+//                 // ...
+//             ])
+//             ->actions([
+//                 // ...
+//             ])
+//             ->bulkActions([
+//                 // ...
+//             ]);
+//     }
 
 //    protected function getTableQuery(): Builder
 //     {
@@ -129,5 +168,8 @@ class Boxquery extends Page implements HasForms, HasTable
 //         //     ->where('status', 'published') // Filter for published posts
 //         //     ->with('author'); // Eager load the author relationship
 //     }
-    
+ protected function getTableEmptyStateHeading(): ?string
+    {
+        return 'No Data yet';
+    }
 }
