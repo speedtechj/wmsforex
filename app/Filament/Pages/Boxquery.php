@@ -45,7 +45,7 @@ class Boxquery extends Page implements HasForms, HasTable
                 TextInput::make('box_query')
                 ->autocomplete(false)
                 ->autofocus()
-                ->minLength(6)
+                ->minLength(4)
                 ->maxLength(7)
                 ->live()
                  ->prefixIcon('heroicon-o-qr-code')
