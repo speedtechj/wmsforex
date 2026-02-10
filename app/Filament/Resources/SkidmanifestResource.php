@@ -72,7 +72,7 @@ class SkidmanifestResource extends Resource
                             if ($agents) {
                                 $agentname = Agent::where('id', $agents)->first();
                                 
-                                return new HtmlString('<span class="p-4">Invoice Not Encoded  Issued to </span>'. $agentname->full_name);
+                                return new HtmlString('<span class="p-4">Invoice Not Encoded Issued to</span>'. $agentname->full_name);
                             } else {
                                 return new HtmlString('<div class="p-4">Invoice Not Encoded</div>');
                             }
