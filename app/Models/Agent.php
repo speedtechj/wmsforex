@@ -9,4 +9,5 @@ class Agent extends Model
 {
     use HasFactory;
     protected $table = 'agents';
+    
 }
