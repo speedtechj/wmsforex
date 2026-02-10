@@ -76,13 +76,10 @@ class SkidmanifestResource extends Resource
                             } else {
                                 return new HtmlString('<div class="p-4">Invoice not issued</div>');
                             }
-                            // $agentname = Agent::where('id', $agent->agent_id)->first();
-                            // dump($agentname);
-
 
                         }
                     })
-                    // ->content(fn($record) => view('filament.invoice-card', ['record' => $record]))
+                
 
                     ->searchable(),
                 Tables\Columns\TextColumn::make('batch.batchno')
