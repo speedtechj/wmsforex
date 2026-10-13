@@ -20,12 +20,14 @@ use Filament\Tables\Concerns\InteractsWithTable;
 
 class Boxquery extends Page implements HasForms, HasTable
 {
-    
-   
+
+
     protected static ?string $navigationIcon = 'heroicon-o-qr-code';
     protected static ?string $navigationLabel = 'Scan Boxquery';
     public static ?string $label = 'Scan Box Info';
-   protected static ?int $navigationSort = 1;    protected static string $view = 'filament.pages.boxquery';
+     protected ?string $heading = 'Scan Boxquery';
+   protected static ?int $navigationSort = 1;
+   protected static string $view = 'filament.pages.boxquery';
     protected static string $layout = 'filament-panels::components.layout.index';
      use InteractsWithForms;
     use InteractsWithTable;
@@ -35,9 +37,9 @@ class Boxquery extends Page implements HasForms, HasTable
     public function mount(): void
     {
     $this->form->fill();
-       
+
     }
-    
+
      public function form(Form $form): Form
     {
         return $form
@@ -52,7 +54,7 @@ class Boxquery extends Page implements HasForms, HasTable
                 ->prefixIconColor('success')
                 ->required()
               //  ->extraAttributes(['wire:keydown.enter.prevent' => 'search'])
-               
+
             ])
            ->statePath('data');
     }
@@ -63,7 +65,7 @@ class Boxquery extends Page implements HasForms, HasTable
         $this->validate();
     $this->searchid = Booking::where('booking_invoice', trim($this->data['box_query']))->orWhere('manual_invoice',trim($this->data['box_query']))->first()->sender_id ?? '';
 
-   
+
         if($this->searchid == ''){
             Notification::make()
             ->title('No Record Found')
@@ -77,7 +79,7 @@ class Boxquery extends Page implements HasForms, HasTable
    // $this->data['box_query'] = " ";
    $this->form->fill();
 
-       
+
 }
 
     protected function getTableQuery(): Builder
@@ -105,7 +107,7 @@ class Boxquery extends Page implements HasForms, HasTable
                }),
                 TextColumn::make('sender.full_name')->label('Sender'),
                 TextColumn::make('boxtype.description')->label('Boxtype'),
-               
+
                TextColumn::make('skidno')->label('Skid No.')
                ->getStateUsing(function (Booking $record) {
                 $skidno = Skiddinginfo::where('booking_id', $record->id)->first();
@@ -122,7 +124,7 @@ class Boxquery extends Page implements HasForms, HasTable
 //        // ->query(Booking::query()->where('sender_id', trim($this->searchid)))
 //    //   ->query(function (Builder $query ){
 //   //  return Booking::query()->where('sender_id', trim($this->searchid));
-      
+
 //        // Booking::$query()->where('sender_id', trim($this->searchid));
 //          // dd($query->get());
 //    //   })
@@ -142,7 +144,7 @@ class Boxquery extends Page implements HasForms, HasTable
 //                }),
 //                 TextColumn::make('sender.full_name')->label('Sender'),
 //                 TextColumn::make('boxtype.description')->label('Boxtype'),
-               
+
 //                TextColumn::make('skidno')->label('Skid No.')
 //                ->getStateUsing(function (Booking $record) {
 //                 $skidno = Skiddinginfo::where('booking_id', $record->id)->first();
